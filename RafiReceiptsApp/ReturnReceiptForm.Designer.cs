@@ -231,6 +231,8 @@
             Controls.Add(lblReceiptId);
             Controls.Add(panelReturnReceipt);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximumSize = new Size(800, 600);
+            MinimumSize = new Size(800, 600);
             Name = "ReturnReceiptForm";
             Text = "Return";
             panelReturnReceipt.ResumeLayout(false);

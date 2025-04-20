@@ -490,7 +490,7 @@
             Controls.Add(dataGridHistory);
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
-            MinimumSize = new Size(1280, 720);
+            MinimumSize = new Size(1280, 900);
             Name = "HistoryForm";
             Text = "Records";
             Load += HistoryForm_Load;

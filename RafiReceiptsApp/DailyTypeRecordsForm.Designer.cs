@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DailyTypeRecordsForm));
             panelDailyRecord = new Panel();
             lblDailyRecord = new Label();
             dgvRecords = new DataGridView();
@@ -147,8 +148,10 @@
             Controls.Add(btnPrintSummary);
             Controls.Add(dgvRecords);
             Controls.Add(panelDailyRecord);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(1280, 720);
             Name = "DailyTypeRecordsForm";
-            Text = "DailyTypeRecordsForm";
+            Text = "Daily Individual Records";
             panelDailyRecord.ResumeLayout(false);
             panelDailyRecord.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvRecords).EndInit();
