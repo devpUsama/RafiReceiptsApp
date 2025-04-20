@@ -17,7 +17,7 @@ namespace RafiReceiptsApp
         {
 
             // Check for F1 to close
-            if (keyData == Keys.F1)
+            if (keyData == Keys.Escape)
             {
                 // close the form.
                 this.Close();

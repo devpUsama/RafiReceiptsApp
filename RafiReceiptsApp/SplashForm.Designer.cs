@@ -40,7 +40,7 @@
             // 
             // pictureBoxLoading
             // 
-            pictureBoxLoading.Anchor = AnchorStyles.None;
+            pictureBoxLoading.Anchor = AnchorStyles.Top;
             pictureBoxLoading.Image = Properties.Resources.rmc_logo_login_removebg_preview1;
             pictureBoxLoading.Location = new Point(14, 12);
             pictureBoxLoading.Name = "pictureBoxLoading";
@@ -70,6 +70,7 @@
             // 
             // siganture
             // 
+            siganture.Anchor = AnchorStyles.Top;
             siganture.Image = Properties.Resources.devusama_siganture1;
             siganture.Location = new Point(544, 346);
             siganture.Name = "siganture";

@@ -9,9 +9,9 @@ namespace RafiReceiptsApp.Models
     public class Receipt
     {
         public int Id { get; set; }                // Primary Key
-        public string TokenType { get; set; }      // e.g., "OPD", "USG", etc.
-        public string PatientName { get; set; }
-        public string Address { get; set; }
+        public string TokenType { get; set; } = string.Empty;      // e.g., "OPD", "USG", etc.
+        public string PatientName { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
         public string? Temperature { get; set; }
         public string? BloodPressure { get; set; }
         public decimal Fee { get; set; }

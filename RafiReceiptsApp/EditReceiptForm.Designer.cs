@@ -110,7 +110,7 @@
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(150, 50);
             btnCancel.TabIndex = 9;
-            btnCancel.Text = "Cancel [F1]";
+            btnCancel.Text = "Cancel [Esc]";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click;
             // 

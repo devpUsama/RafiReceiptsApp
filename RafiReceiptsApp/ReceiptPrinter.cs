@@ -5,8 +5,7 @@ using RafiReceiptsApp.Models; // for Receipt
 
 public class ReceiptPrinter
 {
-    private Receipt _receipt;
-    private Font _printFont = new Font("Arial", 10);
+    private readonly Receipt _receipt;
 
     public ReceiptPrinter(Receipt receipt)
     {
@@ -15,183 +14,148 @@ public class ReceiptPrinter
 
     public void Print()
     {
-        PrintDocument printDoc = new PrintDocument();
-        // Optionally, set printer settings here if needed.
-        printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
+        var printDoc = new PrintDocument();
 
-        // This will show the printer dialog if you wish to select printer manually.
-        // PrintDialog pd = new PrintDialog();
-        // pd.Document = printDoc;
-        // if (pd.ShowDialog() == DialogResult.OK)
-        // {
-        //     printDoc.Print();
-        // }
+        // 1) Set margins to zero
+        printDoc.DefaultPageSettings.Margins = new Margins(0, 0, 0, 0);
 
-        // For simplicity, printing directly:
+        // 2) Define a custom paper size of 3" wide (300 hundredths of an inch)
+        //    height can be large—printer will cut at end of content.
+        PaperSize ps = new PaperSize("Custom", 300, 20000);
+        printDoc.DefaultPageSettings.PaperSize = ps;
+
+        // 3) Handle PrintPage
+        printDoc.PrintPage += PrintPage;
+
+        // 4) Send to the printer
         printDoc.Print();
     }
 
     private void PrintPage(object sender, PrintPageEventArgs e)
     {
-        Graphics g = e.Graphics;
-        float yPos = 10; // starting vertical position
-        float pageWidth = e.PageBounds.Width;
+        Graphics g = e.Graphics!;
 
-        // Define fonts for different parts:
-        Font headerFont = new Font("Arial", 20, FontStyle.Bold);             // For "RMC"
-        Font labelFont = new Font("Arial", 10, FontStyle.Regular);            // For labels on left
-        Font receiptTypeFont = new Font("Arial", 14, FontStyle.Bold);         // For Receipt Type and Queue Number
-        Font contentBoldFont = new Font("Arial", 10, FontStyle.Bold);           // For patient name, temperature, BP, fee values
+        // Use the margin bounds (will be full width now)
+        var area = e.MarginBounds;
+        float left = area.Left;
+        float width = area.Width;
+        float y = area.Top;
 
-        // 1. Print the header "RMC" in bold and large font, centered.
-        string headerText = "RMC";
-        SizeF headerSize = g.MeasureString(headerText, headerFont);
-        float xHeader = (pageWidth - headerSize.Width) / 2;
-        g.DrawString(headerText, headerFont, Brushes.Black, xHeader, yPos);
-        yPos += headerSize.Height + 5;
+        // Fonts
+        var headerFont = new Font("Arial", 16, FontStyle.Bold);
+        var labelFont = new Font("Arial", 10, FontStyle.Regular);
+        var valueFont = new Font("Arial", 10, FontStyle.Bold);
+        var boxFont = new Font("Arial", 14, FontStyle.Bold);
 
-        // 2. Print Receipt ID (if available) under the header.
-        // Assume _receipt.Id has the ID value.
-        if (_receipt.Id != 0)
+        // StringFormat for wrapping
+        var wrapFmt = new StringFormat(StringFormatFlags.LineLimit)
         {
-            string idText = $"ID: {_receipt.Id}";
-            SizeF idSize = g.MeasureString(idText, labelFont);
-            float xID = (pageWidth - idSize.Width) / 2;
-            g.DrawString(idText, labelFont, Brushes.Black, xID, yPos);
-            yPos += idSize.Height + 10;
+            Trimming = StringTrimming.Word,
+            Alignment = StringAlignment.Near,
+            LineAlignment = StringAlignment.Near
+        };
+
+        // 1) Header centered
+        var hdr = "RMC";
+        var hdrSize = g.MeasureString(hdr, headerFont);
+        g.DrawString(hdr, headerFont, Brushes.Black,
+            new RectangleF(left, y, width, hdrSize.Height),
+            new StringFormat { Alignment = StringAlignment.Center });
+        y += hdrSize.Height + 8;
+
+        // --- after drawing "RMC" and advancing y ---
+
+        // 2) Print ID centered under the header
+        string idText = $"ID: {_receipt.Id}";
+        SizeF idSize = g.MeasureString(idText, labelFont);
+        float xId = (width - idSize.Width) / 2;
+        g.DrawString(idText, labelFont, Brushes.Black, xId, y);
+
+        // Advance past the ID
+        y += idSize.Height + 5;
+
+        // 2) Line
+        g.DrawLine(Pens.Black, left, y, left + width, y);
+        y += 10;
+
+        // Helper to draw wrapped label/value
+        void Field(string label, string value)
+        {
+            var labSize = g.MeasureString(label + ":", labelFont);
+            g.DrawString(label + ":", labelFont, Brushes.Black, left, y);
+
+            var valRect = new RectangleF(
+                left + labSize.Width + 5,
+                y,
+                width - labSize.Width - 5,
+                labSize.Height * 4
+            );
+            g.DrawString(value, valueFont, Brushes.Black, valRect, wrapFmt);
+
+            // Advance by actual height used
+            var used = g.MeasureString(value, valueFont, (int)valRect.Width);
+            y += Math.Max(labSize.Height, used.Height) + 6;
         }
 
-        // 2. Draw a horizontal line.
-        g.DrawLine(Pens.Black, 10, yPos, pageWidth - 10, yPos);
-        yPos += 5;
+        // 3) Receipt Type in box
+        {
+            var txt = _receipt.TokenType;
+            var ts = g.MeasureString(txt, boxFont);
+            float pad = 6;
+            var boxW = ts.Width + pad * 2;
+            var boxH = ts.Height + pad * 2;
+            var boxX = left + (width - boxW) / 2;
+            var boxR = new RectangleF(boxX, y, boxW, boxH);
 
-        // 3. Print "Receipt Type:" on left and the value (e.g., OPD) centered.
-        string labelReceiptType = "Receipt Type:";
-        g.DrawString(labelReceiptType, labelFont, Brushes.Black, 10, yPos);
-        string receiptTypeValue = _receipt.TokenType; // e.g., "OPD"
-        SizeF receiptTypeSize = g.MeasureString(receiptTypeValue, receiptTypeFont);
-        float xReceiptType = (pageWidth - receiptTypeSize.Width) / 2;
-        g.DrawString(receiptTypeValue, receiptTypeFont, Brushes.Black, xReceiptType, yPos);
-        yPos += Math.Max(g.MeasureString(labelReceiptType, labelFont).Height, receiptTypeSize.Height) + 5;
+            g.DrawRectangle(Pens.Black, boxR.X, boxR.Y, boxR.Width, boxR.Height);
+            g.DrawString(txt, boxFont, Brushes.Black, boxR,
+                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            y += boxH + 8;
+        }
 
-        // For USG receipts, print the USG type as an extra line (if available)
+        // 4) USG type if present
         if (_receipt.TokenType == "USG" && !string.IsNullOrWhiteSpace(_receipt.USGType))
+            Field("USG Type", _receipt.USGType);
+
+        // 5) Other fields
+        Field("Patient Name", _receipt.PatientName);
+        Field("Address", _receipt.Address);
+
+        if (!string.IsNullOrWhiteSpace(_receipt.Temperature))
+            Field("Temperature", _receipt.Temperature);
+
+        if (!string.IsNullOrWhiteSpace(_receipt.BloodPressure))
+            Field("BP", _receipt.BloodPressure);
+
+        Field("Fee", _receipt.Fee.ToString("F2"));
+
+        // 6) Queue Number in box
         {
-            string labelUsgType = "USG Type:";
-            g.DrawString(labelUsgType, labelFont, Brushes.Black, 10, yPos);
-            SizeF usgTypeSize = g.MeasureString(_receipt.USGType, contentBoldFont);
-            float xUsgType = (pageWidth - usgTypeSize.Width) / 2;
-            g.DrawString(_receipt.USGType, contentBoldFont, Brushes.Black, xUsgType, yPos);
-            yPos += Math.Max(g.MeasureString(labelUsgType, labelFont).Height, usgTypeSize.Height) + 5;
+            var txt = _receipt.QueueNumber.ToString();
+            var ts = g.MeasureString(txt, boxFont);
+            float pad = 6;
+            var boxW = ts.Width + pad * 2;
+            var boxH = ts.Height + pad * 2;
+            var boxX = left + (width - boxW) / 2;
+            var boxR = new RectangleF(boxX, y, boxW, boxH);
 
-        }
-            // 4. Print "patient name:" on left and the patient name (in bold) centered.
-            string labelPatientName = "patient name:";
-            g.DrawString(labelPatientName, labelFont, Brushes.Black, 10, yPos);
-            string patientNameValue = _receipt.PatientName;
-            SizeF patientNameSize = g.MeasureString(patientNameValue, contentBoldFont);
-            float xPatientName = (pageWidth - patientNameSize.Width) / 2;
-            g.DrawString(patientNameValue, contentBoldFont, Brushes.Black, xPatientName, yPos);
-            yPos += Math.Max(g.MeasureString(labelPatientName, labelFont).Height, patientNameSize.Height) + 5;
-
-            // ----- Print Address -----
-            string labelAddress = "Address:";
-            g.DrawString(labelAddress, labelFont, Brushes.Black, 10, yPos);
-            string addressValue = _receipt.Address; // Use the address value from your receipt object
-            SizeF addressSize = g.MeasureString(addressValue, contentBoldFont);
-            float xAddress = (pageWidth - addressSize.Width) / 2;
-            g.DrawString(addressValue, contentBoldFont, Brushes.Black, xAddress, yPos);
-            yPos += Math.Max(g.MeasureString(labelAddress, labelFont).Height, addressSize.Height) + 5;
-
-            // 6. Print Temperature if not empty
-            if (!string.IsNullOrWhiteSpace(_receipt.Temperature))
-            {
-                string labelTemp = "Temperature:";
-                g.DrawString(labelTemp, labelFont, Brushes.Black, 10, yPos);
-                SizeF tempSize = g.MeasureString(_receipt.Temperature, contentBoldFont);
-                float xTemp = (pageWidth - tempSize.Width) / 2;
-                g.DrawString(_receipt.Temperature, contentBoldFont, Brushes.Black, xTemp, yPos);
-                yPos += Math.Max(g.MeasureString(labelTemp, labelFont).Height, tempSize.Height) + 5;
-            }
-
-            // 7. Print Blood Pressure if not empty
-            if (!string.IsNullOrWhiteSpace(_receipt.BloodPressure))
-            {
-                string labelBP = "BP:";
-                g.DrawString(labelBP, labelFont, Brushes.Black, 10, yPos);
-                SizeF bpSize = g.MeasureString(_receipt.BloodPressure, contentBoldFont);
-                float xBP = (pageWidth - bpSize.Width) / 2;
-                g.DrawString(_receipt.BloodPressure, contentBoldFont, Brushes.Black, xBP, yPos);
-                yPos += Math.Max(g.MeasureString(labelBP, labelFont).Height, bpSize.Height) + 5;
-            }
-
-        //// 7. Print the Queue Number centered in bold with the same font size as the receipt type.
-        //string labelQueue = "Token No:";
-        //g.DrawString(labelQueue, labelFont, Brushes.Black, 10, yPos);
-        //string queueValue = _receipt.QueueNumber.ToString();
-        //SizeF queueSize = g.MeasureString(queueValue, receiptTypeFont);
-        //float xQueue = (pageWidth - queueSize.Width) / 2;
-        //g.DrawString(queueValue, receiptTypeFont, Brushes.Black, xQueue, yPos);
-        //yPos += queueSize.Height + 5;
-
-        // Assume _receipt.TokenNumber is an integer.
-        string tokenText = _receipt.TokenNumber.ToString();
-        Font tokenFont = new Font("Arial", 14, FontStyle.Bold);
-
-        // Measure the size of the token text.
-        SizeF tokenSize = g.MeasureString(tokenText, tokenFont);
-
-        // Define some padding for the box.
-        float padding = 10;
-        float boxWidth = tokenSize.Width + 2 * padding;
-        float boxHeight = tokenSize.Height + 2 * padding;
-
-        // Calculate x coordinate so that the box is centered.
-        float xBox = (pageWidth - boxWidth) / 2;
-
-        // Draw a dotted-line rectangle.
-        using (Pen dottedPen = new Pen(Brushes.Black, 1))
-        {
-            dottedPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;  // You can also use DashDot, etc.
-            g.DrawRectangle(dottedPen, xBox, yPos, boxWidth, boxHeight);
+            g.DrawRectangle(Pens.Black, boxR.X, boxR.Y, boxR.Width, boxR.Height);
+            g.DrawString(txt, boxFont, Brushes.Black, boxR,
+                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            y += boxH + 8;
         }
 
-        // Draw the token number inside the box, centered both horizontally and vertically.
-        RectangleF tokenRect = new RectangleF(xBox, yPos, boxWidth, boxHeight);
-        StringFormat centerFormat = new StringFormat();
-        centerFormat.Alignment = StringAlignment.Center;
-        centerFormat.LineAlignment = StringAlignment.Center;
-        g.DrawString(tokenText, tokenFont, Brushes.Black, tokenRect, centerFormat);
 
-        // Advance yPos after printing the token box.
-        yPos += boxHeight + 5;
+        // 7) Date/Time
+        Field("Date", _receipt.CreatedAt.ToString("g"));
 
+        // Advance past the ID
+        y += idSize.Height + 5;
 
-        // 8. Print "Fee:" on left and the fee value (formatted as currency, in bold) centered.
-        string labelFee = "Fee:";
-            g.DrawString(labelFee, labelFont, Brushes.Black, 10, yPos);
-            string feeValue = _receipt.Fee.ToString("C"); // C formats as currency.
-            SizeF feeSize = g.MeasureString(feeValue, contentBoldFont);
-            float xFee = (pageWidth - feeSize.Width) / 2;
-            g.DrawString(feeValue, contentBoldFont, Brushes.Black, xFee, yPos);
-            yPos += Math.Max(g.MeasureString(labelFee, labelFont).Height, feeSize.Height) + 5;
+        // 3) Draw a horizontal line
+        g.DrawLine(Pens.Black, left, y, left + width, y);
+        y += 5;
 
-            // ----- Print Date and Time -----
-            string labelDateTime = "Date:";
-            g.DrawString(labelDateTime, labelFont, Brushes.Black, 10, yPos);
-            string dateTimeValue = _receipt.CreatedAt.ToString("g"); // "g" gives general date/time (short date + short time)
-            SizeF dateTimeSize = g.MeasureString(dateTimeValue, contentBoldFont);
-            float xDateTime = (pageWidth - dateTimeSize.Width) / 2;
-            g.DrawString(dateTimeValue, contentBoldFont, Brushes.Black, xDateTime, yPos);
-            yPos += Math.Max(g.MeasureString(labelDateTime, labelFont).Height, dateTimeSize.Height) + 5; // extra space at the bottom
-
-            //Draw a horizontal line.
-            g.DrawLine(Pens.Black, 10, yPos, pageWidth - 10, yPos);
-            yPos += 5;
-
-            // Indicate that this is the only page to print.
-            e.HasMorePages = false;
-        
-
+        e.HasMorePages = false;
     }
 }

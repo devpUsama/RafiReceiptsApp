@@ -31,7 +31,7 @@ namespace RafiReceiptsApp.Services
 
         private void PrintPage(object sender, PrintPageEventArgs e)
         {
-            Graphics g = e.Graphics;
+            Graphics g = e.Graphics!;
             float leftMargin = 10;
             float rightMargin = 10;
             float topMargin = 10;

@@ -56,17 +56,17 @@ namespace RafiReceiptsApp.Models
             // Seed initial PriceSetting data.
             modelBuilder.Entity<PriceSetting>().HasData(
                 new PriceSetting { Id = 1, Category = "USG", SubType = "Abdominal and Pelvis", Price = 700.00m },
-                new PriceSetting { Id = 2, Category = "USG", SubType = "Scrotal", Price = 1000.00m },
+                new PriceSetting { Id = 2, Category = "USG", SubType = "Scrotal", Price = 1200.00m },
                 new PriceSetting { Id = 3, Category = "USG", SubType = "Breast", Price = 1200.00m },
                 new PriceSetting { Id = 4, Category = "USG", SubType = "Mass", Price = 1200.00m },
-                new PriceSetting { Id = 5, Category = "USG", SubType = "TVS", Price = 1500.00m },
+                new PriceSetting { Id = 5, Category = "USG", SubType = "TVS", Price = 1200.00m },
                 new PriceSetting { Id = 6, Category = "USG", SubType = "Anomaly", Price = 1500.00m },
                 new PriceSetting { Id = 7, Category = "OPD", SubType = "", Price = 300.00m },
                 new PriceSetting { Id = 8, Category = "ECG", SubType = "", Price = 200.00m },
                 new PriceSetting { Id = 9, Category = "Dr", SubType = "Dr Zain", Price = 500.00m },
-                new PriceSetting { Id = 10, Category = "Dr", SubType = "Dr Hamad", Price = 700.00m },
+                new PriceSetting { Id = 10, Category = "Dr", SubType = "Dr Hammad", Price = 700.00m },
                 new PriceSetting { Id = 11, Category = "Dr", SubType = "Dr Jawad", Price = 700.00m },
-                new PriceSetting { Id = 12, Category = "Dr", SubType = "Dr Fizza", Price = 115.00m }
+                new PriceSetting { Id = 12, Category = "Dr", SubType = "Dr Fizza", Price = 700.00m }
             );
 
             base.OnModelCreating(modelBuilder);

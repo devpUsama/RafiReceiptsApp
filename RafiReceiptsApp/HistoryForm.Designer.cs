@@ -38,7 +38,7 @@
             btnPrintDaily = new Button();
             lblOthersSummary = new Label();
             lblDrJawadSummary = new Label();
-            lblDrHamadSummary = new Label();
+            lblDrHammadSummary = new Label();
             lblDrZainSummary = new Label();
             lblTodayTotal = new Label();
             lblEcgSummary = new Label();
@@ -49,10 +49,20 @@
             lblMonthTotal = new Label();
             btnCancel = new Button();
             btnReprint = new Button();
+            gbIndividualRecords = new GroupBox();
+            btnDailyOther = new Button();
+            btnDailyDrJawad = new Button();
+            btnDailyDrHammad = new Button();
+            btnDailyDrFizza = new Button();
+            btnDailyDrZain = new Button();
+            btnDailyUSG = new Button();
+            btnDailyECG = new Button();
+            btnDailyOPD = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridHistory).BeginInit();
             panelHistory.SuspendLayout();
             grpTodaySummary.SuspendLayout();
             grpMonthSummary.SuspendLayout();
+            gbIndividualRecords.SuspendLayout();
             SuspendLayout();
             // 
             // dataGridHistory
@@ -60,10 +70,10 @@
             dataGridHistory.Anchor = AnchorStyles.None;
             dataGridHistory.BackgroundColor = SystemColors.Control;
             dataGridHistory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridHistory.Location = new Point(26, 470);
+            dataGridHistory.Location = new Point(26, 659);
             dataGridHistory.Name = "dataGridHistory";
             dataGridHistory.RowHeadersWidth = 51;
-            dataGridHistory.Size = new Size(1203, 289);
+            dataGridHistory.Size = new Size(1203, 203);
             dataGridHistory.TabIndex = 0;
             dataGridHistory.CellDoubleClick += dataGridHistory_CellDoubleClick;
             // 
@@ -95,7 +105,7 @@
             labelHistoryPatient.AutoSize = true;
             labelHistoryPatient.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelHistoryPatient.ForeColor = Color.FromArgb(91, 42, 134);
-            labelHistoryPatient.Location = new Point(59, 90);
+            labelHistoryPatient.Location = new Point(59, 80);
             labelHistoryPatient.Name = "labelHistoryPatient";
             labelHistoryPatient.Size = new Size(195, 30);
             labelHistoryPatient.TabIndex = 6;
@@ -108,13 +118,13 @@
             grpTodaySummary.Controls.Add(btnPrintDaily);
             grpTodaySummary.Controls.Add(lblOthersSummary);
             grpTodaySummary.Controls.Add(lblDrJawadSummary);
-            grpTodaySummary.Controls.Add(lblDrHamadSummary);
+            grpTodaySummary.Controls.Add(lblDrHammadSummary);
             grpTodaySummary.Controls.Add(lblDrZainSummary);
             grpTodaySummary.Controls.Add(lblTodayTotal);
             grpTodaySummary.Controls.Add(lblEcgSummary);
             grpTodaySummary.Controls.Add(lblUsgSummary);
             grpTodaySummary.Controls.Add(lblOpdSummary);
-            grpTodaySummary.Location = new Point(59, 134);
+            grpTodaySummary.Location = new Point(59, 124);
             grpTodaySummary.Name = "grpTodaySummary";
             grpTodaySummary.Size = new Size(552, 326);
             grpTodaySummary.TabIndex = 7;
@@ -171,16 +181,16 @@
             lblDrJawadSummary.TabIndex = 25;
             lblDrJawadSummary.Text = "Dr Jawad Summary";
             // 
-            // lblDrHamadSummary
+            // lblDrHammadSummary
             // 
-            lblDrHamadSummary.Anchor = AnchorStyles.Top;
-            lblDrHamadSummary.AutoSize = true;
-            lblDrHamadSummary.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrHamadSummary.Location = new Point(42, 148);
-            lblDrHamadSummary.Name = "lblDrHamadSummary";
-            lblDrHamadSummary.Size = new Size(204, 30);
-            lblDrHamadSummary.TabIndex = 24;
-            lblDrHamadSummary.Text = "Dr Hamad Summary";
+            lblDrHammadSummary.Anchor = AnchorStyles.Top;
+            lblDrHammadSummary.AutoSize = true;
+            lblDrHammadSummary.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDrHammadSummary.Location = new Point(42, 148);
+            lblDrHammadSummary.Name = "lblDrHammadSummary";
+            lblDrHammadSummary.Size = new Size(223, 30);
+            lblDrHammadSummary.TabIndex = 24;
+            lblDrHammadSummary.Text = "Dr Hammad Summary";
             // 
             // lblDrZainSummary
             // 
@@ -243,7 +253,7 @@
             grpMonthSummary.Anchor = AnchorStyles.None;
             grpMonthSummary.Controls.Add(btnPrintMonthly);
             grpMonthSummary.Controls.Add(lblMonthTotal);
-            grpMonthSummary.Location = new Point(624, 134);
+            grpMonthSummary.Location = new Point(624, 124);
             grpMonthSummary.Name = "grpMonthSummary";
             grpMonthSummary.Size = new Size(548, 174);
             grpMonthSummary.TabIndex = 8;
@@ -287,11 +297,11 @@
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCancel.ForeColor = Color.FromArgb(91, 42, 134);
-            btnCancel.Location = new Point(1078, 779);
+            btnCancel.Location = new Point(1078, 882);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(150, 50);
             btnCancel.TabIndex = 11;
-            btnCancel.Text = "Cancel [F1]";
+            btnCancel.Text = "Cancel [Esc]";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click;
             // 
@@ -302,7 +312,7 @@
             btnReprint.FlatStyle = FlatStyle.Flat;
             btnReprint.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnReprint.ForeColor = SystemColors.ButtonHighlight;
-            btnReprint.Location = new Point(909, 779);
+            btnReprint.Location = new Point(909, 882);
             btnReprint.Name = "btnReprint";
             btnReprint.Size = new Size(150, 50);
             btnReprint.TabIndex = 10;
@@ -310,12 +320,167 @@
             btnReprint.UseVisualStyleBackColor = false;
             btnReprint.Click += btnReprint_Click;
             // 
+            // gbIndividualRecords
+            // 
+            gbIndividualRecords.Anchor = AnchorStyles.None;
+            gbIndividualRecords.Controls.Add(btnDailyOther);
+            gbIndividualRecords.Controls.Add(btnDailyDrJawad);
+            gbIndividualRecords.Controls.Add(btnDailyDrHammad);
+            gbIndividualRecords.Controls.Add(btnDailyDrFizza);
+            gbIndividualRecords.Controls.Add(btnDailyDrZain);
+            gbIndividualRecords.Controls.Add(btnDailyUSG);
+            gbIndividualRecords.Controls.Add(btnDailyECG);
+            gbIndividualRecords.Controls.Add(btnDailyOPD);
+            gbIndividualRecords.Location = new Point(59, 466);
+            gbIndividualRecords.Name = "gbIndividualRecords";
+            gbIndividualRecords.Size = new Size(1113, 164);
+            gbIndividualRecords.TabIndex = 12;
+            gbIndividualRecords.TabStop = false;
+            gbIndividualRecords.Text = "Individual Records";
+            // 
+            // btnDailyOther
+            // 
+            btnDailyOther.Anchor = AnchorStyles.Top;
+            btnDailyOther.BackColor = Color.WhiteSmoke;
+            btnDailyOther.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDailyOther.FlatAppearance.BorderSize = 2;
+            btnDailyOther.FlatStyle = FlatStyle.Flat;
+            btnDailyOther.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDailyOther.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDailyOther.Location = new Point(605, 94);
+            btnDailyOther.Name = "btnDailyOther";
+            btnDailyOther.Size = new Size(150, 50);
+            btnDailyOther.TabIndex = 35;
+            btnDailyOther.Text = "Others";
+            btnDailyOther.UseVisualStyleBackColor = false;
+            btnDailyOther.Click += btnDailyOther_Click;
+            // 
+            // btnDailyDrJawad
+            // 
+            btnDailyDrJawad.Anchor = AnchorStyles.Top;
+            btnDailyDrJawad.BackColor = Color.WhiteSmoke;
+            btnDailyDrJawad.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrJawad.FlatAppearance.BorderSize = 2;
+            btnDailyDrJawad.FlatStyle = FlatStyle.Flat;
+            btnDailyDrJawad.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDailyDrJawad.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrJawad.Location = new Point(380, 94);
+            btnDailyDrJawad.Name = "btnDailyDrJawad";
+            btnDailyDrJawad.Size = new Size(150, 50);
+            btnDailyDrJawad.TabIndex = 34;
+            btnDailyDrJawad.Text = "Dr Jawad";
+            btnDailyDrJawad.UseVisualStyleBackColor = false;
+            btnDailyDrJawad.Click += btnDailyDrJawad_Click;
+            // 
+            // btnDailyDrHammad
+            // 
+            btnDailyDrHammad.Anchor = AnchorStyles.Top;
+            btnDailyDrHammad.BackColor = Color.WhiteSmoke;
+            btnDailyDrHammad.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrHammad.FlatAppearance.BorderSize = 2;
+            btnDailyDrHammad.FlatStyle = FlatStyle.Flat;
+            btnDailyDrHammad.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDailyDrHammad.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrHammad.Location = new Point(943, 26);
+            btnDailyDrHammad.Name = "btnDailyDrHammad";
+            btnDailyDrHammad.Size = new Size(150, 50);
+            btnDailyDrHammad.TabIndex = 33;
+            btnDailyDrHammad.Text = "Dr Hammad";
+            btnDailyDrHammad.UseVisualStyleBackColor = false;
+            btnDailyDrHammad.Click += btnDailyDrHammad_Click;
+            // 
+            // btnDailyDrFizza
+            // 
+            btnDailyDrFizza.Anchor = AnchorStyles.Top;
+            btnDailyDrFizza.BackColor = Color.WhiteSmoke;
+            btnDailyDrFizza.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrFizza.FlatAppearance.BorderSize = 2;
+            btnDailyDrFizza.FlatStyle = FlatStyle.Flat;
+            btnDailyDrFizza.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDailyDrFizza.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrFizza.Location = new Point(761, 26);
+            btnDailyDrFizza.Name = "btnDailyDrFizza";
+            btnDailyDrFizza.Size = new Size(150, 50);
+            btnDailyDrFizza.TabIndex = 32;
+            btnDailyDrFizza.Text = "Dr Fizza";
+            btnDailyDrFizza.UseVisualStyleBackColor = false;
+            btnDailyDrFizza.Click += btnDailyDrFizza_Click;
+            // 
+            // btnDailyDrZain
+            // 
+            btnDailyDrZain.Anchor = AnchorStyles.Top;
+            btnDailyDrZain.BackColor = Color.WhiteSmoke;
+            btnDailyDrZain.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrZain.FlatAppearance.BorderSize = 2;
+            btnDailyDrZain.FlatStyle = FlatStyle.Flat;
+            btnDailyDrZain.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDailyDrZain.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrZain.Location = new Point(580, 26);
+            btnDailyDrZain.Name = "btnDailyDrZain";
+            btnDailyDrZain.Size = new Size(150, 50);
+            btnDailyDrZain.TabIndex = 31;
+            btnDailyDrZain.Text = "Dr Zain";
+            btnDailyDrZain.UseVisualStyleBackColor = false;
+            btnDailyDrZain.Click += btnDailyDrZain_Click;
+            // 
+            // btnDailyUSG
+            // 
+            btnDailyUSG.Anchor = AnchorStyles.Top;
+            btnDailyUSG.BackColor = Color.WhiteSmoke;
+            btnDailyUSG.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDailyUSG.FlatAppearance.BorderSize = 2;
+            btnDailyUSG.FlatStyle = FlatStyle.Flat;
+            btnDailyUSG.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDailyUSG.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDailyUSG.Location = new Point(399, 26);
+            btnDailyUSG.Name = "btnDailyUSG";
+            btnDailyUSG.Size = new Size(150, 50);
+            btnDailyUSG.TabIndex = 30;
+            btnDailyUSG.Text = "USG";
+            btnDailyUSG.UseVisualStyleBackColor = false;
+            btnDailyUSG.Click += btnDailyUSG_Click;
+            // 
+            // btnDailyECG
+            // 
+            btnDailyECG.Anchor = AnchorStyles.Top;
+            btnDailyECG.BackColor = Color.WhiteSmoke;
+            btnDailyECG.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDailyECG.FlatAppearance.BorderSize = 2;
+            btnDailyECG.FlatStyle = FlatStyle.Flat;
+            btnDailyECG.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDailyECG.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDailyECG.Location = new Point(216, 26);
+            btnDailyECG.Name = "btnDailyECG";
+            btnDailyECG.Size = new Size(150, 50);
+            btnDailyECG.TabIndex = 29;
+            btnDailyECG.Text = "ECG";
+            btnDailyECG.UseVisualStyleBackColor = false;
+            btnDailyECG.Click += btnDailyECG_Click;
+            // 
+            // btnDailyOPD
+            // 
+            btnDailyOPD.Anchor = AnchorStyles.Top;
+            btnDailyOPD.BackColor = Color.WhiteSmoke;
+            btnDailyOPD.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDailyOPD.FlatAppearance.BorderSize = 2;
+            btnDailyOPD.FlatStyle = FlatStyle.Flat;
+            btnDailyOPD.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDailyOPD.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDailyOPD.Location = new Point(34, 26);
+            btnDailyOPD.Name = "btnDailyOPD";
+            btnDailyOPD.Size = new Size(150, 50);
+            btnDailyOPD.TabIndex = 28;
+            btnDailyOPD.Text = "OPD";
+            btnDailyOPD.UseVisualStyleBackColor = false;
+            btnDailyOPD.Click += btnDailyOPD_Click;
+            // 
             // HistoryForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(1262, 853);
+            ClientSize = new Size(1262, 953);
+            Controls.Add(gbIndividualRecords);
             Controls.Add(btnCancel);
             Controls.Add(btnReprint);
             Controls.Add(grpMonthSummary);
@@ -336,6 +501,7 @@
             grpTodaySummary.PerformLayout();
             grpMonthSummary.ResumeLayout(false);
             grpMonthSummary.PerformLayout();
+            gbIndividualRecords.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -355,12 +521,21 @@
         private Label lblMonthTotal;
         private Label lblOthersSummary;
         private Label lblDrJawadSummary;
-        private Label lblDrHamadSummary;
+        private Label lblDrHammadSummary;
         private Label lblDrZainSummary;
         private Button btnPrintDaily;
         private Button btnPrintMonthly;
         private Label lblDrFizzaSummary;
         private Button btnCancel;
         private Button btnReprint;
+        private GroupBox gbIndividualRecords;
+        private Button btnDailyOther;
+        private Button btnDailyDrJawad;
+        private Button btnDailyDrHammad;
+        private Button btnDailyDrFizza;
+        private Button btnDailyDrZain;
+        private Button btnDailyUSG;
+        private Button btnDailyECG;
+        private Button btnDailyOPD;
     }
 }

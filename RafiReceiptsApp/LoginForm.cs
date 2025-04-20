@@ -19,7 +19,7 @@ namespace RafiReceiptsApp
                 return true;
             }
             // Check for F3 to cancel
-            else if (keyData == Keys.F1)
+            else if (keyData == Keys.Escape)
             {
                 btnExit.PerformClick();
                 return true;

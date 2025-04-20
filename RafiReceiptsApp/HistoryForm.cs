@@ -26,7 +26,7 @@ namespace RafiReceiptsApp
                 return true;
             }
             // Check for F3 to cancel
-            else if (keyData == Keys.F1)
+            else if (keyData == Keys.Escape)
             {
                 btnCancel.PerformClick();
                 return true;
@@ -36,6 +36,16 @@ namespace RafiReceiptsApp
         public HistoryForm()
         {
             InitializeComponent();
+            // 1. Make the grid read‑only so clicks don’t trigger editing
+            dataGridHistory.ReadOnly = true;
+            dataGridHistory.AllowUserToAddRows = false;
+            dataGridHistory.AllowUserToDeleteRows = false;
+
+            // 2. Prevent entering into edit mode on single‑click
+            dataGridHistory.EditMode = DataGridViewEditMode.EditProgrammatically;
+
+            // 3. Optional: disable row header editing menu
+            dataGridHistory.RowHeadersVisible = false;
         }
 
         private void HistoryForm_Load(object sender, EventArgs e)
@@ -138,8 +148,8 @@ namespace RafiReceiptsApp
                 int drZainCount = todaysReceipts.Where(r => r.TokenType == "Dr Zain").Count();
                 decimal drZainTotal = todaysReceipts.Where(r => r.TokenType == "Dr Zain").Sum(r => (decimal?)r.Fee) ?? 0m;
 
-                int drHamadCount = todaysReceipts.Where(r => r.TokenType == "Dr Hamad").Count();
-                decimal drHamadTotal = todaysReceipts.Where(r => r.TokenType == "Dr Hamad").Sum(r => (decimal?)r.Fee) ?? 0m;
+                int drHammadCount = todaysReceipts.Where(r => r.TokenType == "Dr Hammad").Count();
+                decimal drHammadTotal = todaysReceipts.Where(r => r.TokenType == "Dr Hammad").Sum(r => (decimal?)r.Fee) ?? 0m;
 
                 int drJawadCount = todaysReceipts.Where(r => r.TokenType == "Dr Jawad").Count();
                 decimal drJawadTotal = todaysReceipts.Where(r => r.TokenType == "Dr Jawad").Sum(r => (decimal?)r.Fee) ?? 0m;
@@ -166,7 +176,7 @@ namespace RafiReceiptsApp
                 lblEcgSummary.Text = $"ECG: {ecgCount} tokens, Total: {ecgTotal:C}";
                 lblUsgSummary.Text = $"USG: {usgCount} tokens, Total: {usgTotal:C}";
                 lblDrZainSummary.Text = $"Dr Zain: {drZainCount} tokens, Total: {drZainTotal:C}";
-                lblDrHamadSummary.Text = $"Dr Hamad: {drHamadCount} tokens, Total: {drHamadTotal:C}";
+                lblDrHammadSummary.Text = $"Dr Hammad: {drHammadCount} tokens, Total: {drHammadTotal:C}";
                 lblDrJawadSummary.Text = $"Dr Jawad: {drJawadCount} tokens, Total: {drJawadTotal:C}";
                 lblDrFizzaSummary.Text = $"Dr Fizza: {drFizzaCount} tokens, Total: {drFizzaTotal:C}";
                 lblOthersSummary.Text = $"Others: {othersCount} tokens, Total: {othersTotal:C}";
@@ -186,7 +196,7 @@ namespace RafiReceiptsApp
                              $"USG: {lblUsgSummary.Text}\n" +
                              $"Dr Zain: {lblDrZainSummary.Text}\n" +
                              $"Dr Fizza: {lblDrFizzaSummary.Text}\n" +
-                             $"Dr Hamad: {lblDrHamadSummary.Text}\n" +
+                             $"Dr Hammad: {lblDrHammadSummary.Text}\n" +
                              $"Dr Jawad: {lblDrJawadSummary.Text}\n" +
                              $"Others: {lblOthersSummary.Text}\n" +
                              $"{lblTodayTotal.Text}";
@@ -273,6 +283,54 @@ namespace RafiReceiptsApp
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void btnDailyOPD_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("OPD");
+            form.ShowDialog();
+        }
+
+        private void btnDailyECG_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("ECG");
+            form.ShowDialog();
+        }
+
+        private void btnDailyUSG_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("USG");
+            form.ShowDialog();
+        }
+
+        private void btnDailyDrZain_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("Dr Zain");
+            form.ShowDialog();
+        }
+
+        private void btnDailyDrFizza_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("Dr Fizza");
+            form.ShowDialog();
+        }
+
+        private void btnDailyDrHammad_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("Dr Hammad");
+            form.ShowDialog();
+        }
+
+        private void btnDailyDrJawad_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("Dr Jawad");
+            form.ShowDialog();
+        }
+
+        private void btnDailyOther_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("Other");
+            form.ShowDialog();
         }
     }
 }

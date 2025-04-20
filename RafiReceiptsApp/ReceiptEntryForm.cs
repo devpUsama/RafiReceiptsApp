@@ -36,7 +36,7 @@ namespace RafiReceiptsApp
                 return true;
             }
             // Check for F3 to cancel
-            else if (keyData == Keys.F1)
+            else if (keyData == Keys.Escape)
             {
                 btnCancel.PerformClick();
                 return true;
@@ -54,7 +54,7 @@ namespace RafiReceiptsApp
         private string _tokenType;
 
         // Returns null if validation passes; otherwise, returns an error message.
-        private string ValidateFormInputs()
+        private string? ValidateFormInputs()
         {
             // Check required fields – you can adjust according to your requirements.
             if (string.IsNullOrWhiteSpace(txtPatientName.Text))
@@ -122,7 +122,7 @@ namespace RafiReceiptsApp
                 txtDoctorName.Visible = false;
                 lblDoctorName.Visible = false;
             }
-            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hamad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza")
+            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hammad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza")
             {
                 // For these, show a non-editable field populated with the corresponding doctor's name.
                 txtDoctorName.Visible = true;
@@ -160,7 +160,7 @@ namespace RafiReceiptsApp
                     }
                 }
             }
-            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hamad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza")
+            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hammad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza")
             {
                 // For these, load the doctor's price
                 using (var context = new ApplicationDbContext())
@@ -177,7 +177,7 @@ namespace RafiReceiptsApp
         private void btnGenerate_Click(object sender, EventArgs e)
         {
             // Validate form inputs
-            string validationError = ValidateFormInputs();
+            string? validationError = ValidateFormInputs();
             if (validationError != null)
             {
                 MessageBox.Show(validationError, "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -204,7 +204,17 @@ namespace RafiReceiptsApp
                 // If USG, optionally assign the selected USG type to a new property
                 if (_tokenType == "USG")
                 {
-                    receipt.USGType = cmbUSGType.SelectedItem.ToString();
+                    // 1a) Ensure something is selected
+                    if (cmbUSGType.SelectedItem is not string selectedType)
+                    {
+                        MessageBox.Show(
+                            "Please select a valid USG type.",
+                            "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 1b) Now we know selectedType is non-null
+                    receipt.USGType = selectedType;
                 }
 
                 // Instantiate the ReceiptService and generate the receipt
@@ -228,6 +238,16 @@ namespace RafiReceiptsApp
                     MessageBox.Show("Printing Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 // Optionally, close the form after generation.
+                // Instead of closing the form, clear the fields for a new entry.
+                txtPatientName.Text = "";
+                txtAddress.Text = "";
+                if (txtTemperature.Visible)
+                    txtTemperature.Text = "";
+                if (txtBP.Visible)
+                    txtBP.Text = "";
+
+                // Optionally reset focus to the first field.
+                txtPatientName.Focus();
                 //this.Close();
             }
             catch (Exception ex)
@@ -254,7 +274,15 @@ namespace RafiReceiptsApp
         {
             if (cmbUSGType.SelectedItem != null)
             {
-                string selectedType = cmbUSGType.SelectedItem.ToString();
+                // Safely get the selected type, defaulting to empty if nothing is selected:
+                string selectedType = cmbUSGType.SelectedItem?.ToString() ?? string.Empty;
+
+                if (string.IsNullOrEmpty(selectedType))
+                {
+                    // Nothing selected—clear fee or bail out
+                    txtFee.Text = "";
+                    return;
+                }
                 using (var context = new ApplicationDbContext())
                 {
                     var setting = context.PriceSettings

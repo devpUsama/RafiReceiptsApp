@@ -24,7 +24,7 @@ namespace RafiReceiptsApp
                 return true;
             }
             // Check for F3 to cancel
-            else if (keyData == Keys.F1)
+            else if (keyData == Keys.Escape)
             {
                 btnCancel.PerformClick();
                 return true;
@@ -84,8 +84,26 @@ namespace RafiReceiptsApp
             }
         }
 
+        private bool ConfirmUpdate()
+        {
+            string password = Microsoft.VisualBasic.Interaction.InputBox(
+                "Enter the Updation password:", "Confirm Update", "");
+            // Hardcode your password here (for example: "admin123")
+            if (password == "rmc@890")
+                return true;
+            else
+            {
+                MessageBox.Show("Incorrect password. Update aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
+
+            if (!ConfirmUpdate())
+                return;
+
             // Validate and update _receipt with new values.
             _receipt.PatientName = txtPatientName.Text.Trim();
             _receipt.Address = txtAddress.Text.Trim();
@@ -125,7 +143,7 @@ namespace RafiReceiptsApp
             string password = Microsoft.VisualBasic.Interaction.InputBox(
                 "Enter the deletion password:", "Confirm Deletion", "");
             // Hardcode your password here (for example: "admin123")
-            if (password == "admin123")
+            if (password == "Ghost@rmc")
                 return true;
             else
             {

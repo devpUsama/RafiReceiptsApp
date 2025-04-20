@@ -12,14 +12,14 @@ namespace RafiReceiptsApp.Models
         /// <summary>
         /// A general category for price settings (e.g., "USG", "OPD", "ECG", "Dr")
         /// </summary>
-        public string Category { get; set; }
+        public string Category { get; set; } = string.Empty;
 
         /// <summary>
         /// For USG category, SubType holds the specific USG type (e.g., "Abdominal and Pelvis", "Scrotal", etc.)
         /// For doctor categories, this would be the doctor's name.
         /// For OPD or ECG, SubType can be left blank if only one price is used.
         /// </summary>
-        public string SubType { get; set; }
+        public string SubType { get; set; } = string.Empty;
 
         /// <summary>
         /// The price for this specific setting.

@@ -64,7 +64,7 @@
             // 
             // txtPassword
             // 
-            txtPassword.Anchor = AnchorStyles.None;
+            txtPassword.Anchor = AnchorStyles.Bottom;
             txtPassword.BackColor = SystemColors.Menu;
             txtPassword.Font = new Font("Poppins", 10.2F);
             txtPassword.Location = new Point(366, 445);
@@ -75,7 +75,7 @@
             // 
             // lblPassword
             // 
-            lblPassword.Anchor = AnchorStyles.None;
+            lblPassword.Anchor = AnchorStyles.Bottom;
             lblPassword.AutoSize = true;
             lblPassword.Font = new Font("Poppins", 10.2F, FontStyle.Bold);
             lblPassword.Location = new Point(166, 448);
@@ -86,7 +86,7 @@
             // 
             // txtUsername
             // 
-            txtUsername.Anchor = AnchorStyles.None;
+            txtUsername.Anchor = AnchorStyles.Bottom;
             txtUsername.BackColor = SystemColors.Menu;
             txtUsername.Font = new Font("Poppins", 10.2F);
             txtUsername.Location = new Point(366, 396);
@@ -96,7 +96,7 @@
             // 
             // lblUsername
             // 
-            lblUsername.Anchor = AnchorStyles.None;
+            lblUsername.Anchor = AnchorStyles.Bottom;
             lblUsername.AutoSize = true;
             lblUsername.Font = new Font("Poppins", 10.2F, FontStyle.Bold);
             lblUsername.Location = new Point(166, 399);
@@ -107,7 +107,7 @@
             // 
             // btnExit
             // 
-            btnExit.Anchor = AnchorStyles.None;
+            btnExit.Anchor = AnchorStyles.Bottom;
             btnExit.BackColor = Color.WhiteSmoke;
             btnExit.FlatAppearance.BorderSize = 2;
             btnExit.FlatStyle = FlatStyle.Flat;
@@ -117,13 +117,13 @@
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(150, 50);
             btnExit.TabIndex = 11;
-            btnExit.Text = "Cancel [F1]";
+            btnExit.Text = "Cancel [Esc]";
             btnExit.UseVisualStyleBackColor = false;
             btnExit.Click += btnExit_Click;
             // 
             // btnLogin
             // 
-            btnLogin.Anchor = AnchorStyles.None;
+            btnLogin.Anchor = AnchorStyles.Bottom;
             btnLogin.BackColor = Color.FromArgb(91, 42, 134);
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);

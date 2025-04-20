@@ -46,10 +46,10 @@ namespace RafiReceiptsApp
                 btnDrJawad.PerformClick();
                 return true;
             }
-            // Check for F7 to Dr Hamad
+            // Check for F7 to Dr Hammad
             else if (keyData == Keys.F7)
             {
-                btnDrHamad.PerformClick();
+                btnDrHammad.PerformClick();
                 return true;
             }
             // Check for F8 to Other
@@ -129,10 +129,10 @@ namespace RafiReceiptsApp
             receiptForm.ShowDialog(); // Show modally so that the user completes this form before returning.
         }
 
-        private void btnDrHamad_Click(object sender, EventArgs e)
+        private void btnDrHammad_Click(object sender, EventArgs e)
         {
             // Open the ReceiptEntryForm with the selected token type "OPD"
-            var receiptForm = new ReceiptEntryForm("Dr Hamad");
+            var receiptForm = new ReceiptEntryForm("Dr Hammad");
             receiptForm.ShowDialog(); // Show modally so that the user completes this form before returning.
         }
 

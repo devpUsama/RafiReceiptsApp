@@ -32,7 +32,7 @@ namespace RafiReceiptsApp
                 return true;
             }
             // Check for F1 to cancel
-            else if (keyData == Keys.F1)
+            else if (keyData == Keys.Escape)
             {
                 btnCancel.PerformClick();
                 return true;
@@ -47,7 +47,7 @@ namespace RafiReceiptsApp
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private Receipt _loadedReceipt;
+        private Receipt? _loadedReceipt;
 
         public ReturnReceiptForm()
         {
@@ -60,6 +60,12 @@ namespace RafiReceiptsApp
             {
                 using (var context = new ApplicationDbContext())
                 {
+                    if (_loadedReceipt == null)
+                    {
+                        MessageBox.Show("No receipt loaded. Please enter an ID and load a receipt first.",
+                                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     _loadedReceipt = context.Receipts.Find(receiptId);
                 }
 

@@ -38,7 +38,7 @@
             btnECG = new Button();
             labelOtherReceipt = new Label();
             btnDrZain = new Button();
-            btnDrHamad = new Button();
+            btnDrHammad = new Button();
             btnDrJawad = new Button();
             labelSystem = new Label();
             btnHistory = new Button();
@@ -178,22 +178,22 @@
             btnDrZain.UseVisualStyleBackColor = false;
             btnDrZain.Click += btnDrZain_Click;
             // 
-            // btnDrHamad
+            // btnDrHammad
             // 
-            btnDrHamad.Anchor = AnchorStyles.Top;
-            btnDrHamad.BackColor = Color.WhiteSmoke;
-            btnDrHamad.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
-            btnDrHamad.FlatAppearance.BorderSize = 2;
-            btnDrHamad.FlatStyle = FlatStyle.Flat;
-            btnDrHamad.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDrHamad.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDrHamad.Location = new Point(51, 257);
-            btnDrHamad.Name = "btnDrHamad";
-            btnDrHamad.Size = new Size(161, 50);
-            btnDrHamad.TabIndex = 3;
-            btnDrHamad.Text = "Dr Hamad [F7]";
-            btnDrHamad.UseVisualStyleBackColor = false;
-            btnDrHamad.Click += btnDrHamad_Click;
+            btnDrHammad.Anchor = AnchorStyles.Top;
+            btnDrHammad.BackColor = Color.WhiteSmoke;
+            btnDrHammad.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDrHammad.FlatAppearance.BorderSize = 2;
+            btnDrHammad.FlatStyle = FlatStyle.Flat;
+            btnDrHammad.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDrHammad.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDrHammad.Location = new Point(51, 257);
+            btnDrHammad.Name = "btnDrHammad";
+            btnDrHammad.Size = new Size(161, 50);
+            btnDrHammad.TabIndex = 3;
+            btnDrHammad.Text = "Dr Hammad [F7]";
+            btnDrHammad.UseVisualStyleBackColor = false;
+            btnDrHammad.Click += btnDrHammad_Click;
             // 
             // btnDrJawad
             // 
@@ -294,7 +294,7 @@
             panelOtherButton.Controls.Add(btnDrZain);
             panelOtherButton.Controls.Add(btnDrJawad);
             panelOtherButton.Controls.Add(btnOtherReceipt);
-            panelOtherButton.Controls.Add(btnDrHamad);
+            panelOtherButton.Controls.Add(btnDrHammad);
             panelOtherButton.Location = new Point(708, 188);
             panelOtherButton.Name = "panelOtherButton";
             panelOtherButton.Size = new Size(247, 384);
@@ -396,7 +396,7 @@
         private Button btnECG;
         private Label labelOtherReceipt;
         private Button btnDrZain;
-        private Button btnDrHamad;
+        private Button btnDrHammad;
         private Button btnDrJawad;
         private Label labelSystem;
         private Button btnHistory;
