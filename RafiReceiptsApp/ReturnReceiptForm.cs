@@ -93,8 +93,63 @@ namespace RafiReceiptsApp
             }
         }
 
+        private bool ConfirmReturn()
+        {
+            // Create a tiny modal form at runtime (no designer, no extra files)
+            using (Form prompt = new Form())
+            {
+                prompt.Width = 380;
+                prompt.Height = 140;
+                prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                prompt.StartPosition = FormStartPosition.CenterParent;
+                prompt.MinimizeBox = false;
+                prompt.MaximizeBox = false;
+                prompt.ShowInTaskbar = false;
+                prompt.Text = "Confirm Return";
+
+                Label textLabel = new Label() { Left = 12, Top = 12, Width = 340, Text = "Enter the Return password:" };
+                TextBox inputBox = new TextBox() { Left = 12, Top = 36, Width = 340 };
+
+                // MAKE IT MASKED
+                inputBox.UseSystemPasswordChar = true; // -> hides characters / shows bullets
+
+                Button okButton = new Button() { Text = "OK", Left = 190, Width = 80, Top = 70, DialogResult = DialogResult.OK };
+                Button cancelButton = new Button() { Text = "Cancel", Left = 272, Width = 80, Top = 70, DialogResult = DialogResult.Cancel };
+
+                prompt.Controls.Add(textLabel);
+                prompt.Controls.Add(inputBox);
+                prompt.Controls.Add(okButton);
+                prompt.Controls.Add(cancelButton);
+
+                prompt.AcceptButton = okButton;
+                prompt.CancelButton = cancelButton;
+
+                if (prompt.ShowDialog(this) == DialogResult.OK)
+                {
+                    string password = inputBox.Text ?? string.Empty;
+
+                    // compare securely (still avoiding plaintext storage in production)
+                    if (string.Equals(password, "rmc786!", StringComparison.Ordinal))
+                        return true;
+
+                    MessageBox.Show("Incorrect password. Return aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                else
+                {
+                    // Cancel pressed
+                    return false;
+                }
+            }
+        }
+
+
         private void btnSubmitReturn_Click(object sender, EventArgs e)
         {
+
+            if (!ConfirmReturn())
+                return;
+
             // Ensure a receipt is loaded.
             if (_loadedReceipt == null)
             {

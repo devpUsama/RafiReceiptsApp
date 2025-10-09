@@ -17,7 +17,7 @@ namespace RafiReceiptsApp
 
         //private static readonly Dictionary<string, decimal> DefaultUSGPrices = new Dictionary<string, decimal>
         //{
-        //    { "Abdominal and Pelvis", 700.00m },
+        //    { "ABD & PLVS", 700.00m },
         //    { "Scrotal", 1000.00m },
         //    { "Breast", 1200.00m },
         //    { "Mass", 2000.00m },
@@ -122,7 +122,7 @@ namespace RafiReceiptsApp
                 txtDoctorName.Visible = false;
                 lblDoctorName.Visible = false;
             }
-            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hammad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza")
+            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hammad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza" || _tokenType == "Dr Tehreem" || _tokenType == "Dr Zuhaib")
             {
                 // For these, show a non-editable field populated with the corresponding doctor's name.
                 txtDoctorName.Visible = true;
@@ -160,7 +160,7 @@ namespace RafiReceiptsApp
                     }
                 }
             }
-            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hammad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza")
+            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hammad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza" || _tokenType == "Dr Tehreem" || _tokenType == "Dr Zuhaib")
             {
                 // For these, load the doctor's price
                 using (var context = new ApplicationDbContext())

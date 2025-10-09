@@ -50,6 +50,8 @@
             panelAdmin = new Panel();
             btnReturnReceipt = new Button();
             boxSignature = new PictureBox();
+            btnDrTehreem = new Button();
+            btnDrZuhaib = new Button();
             panelHeader.SuspendLayout();
             panelMainButtons.SuspendLayout();
             panelOtherButton.SuspendLayout();
@@ -63,19 +65,20 @@
             panelHeader.Controls.Add(labelHeader);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
+            panelHeader.Margin = new Padding(3, 2, 3, 2);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(1262, 75);
+            panelHeader.Size = new Size(1106, 56);
             panelHeader.TabIndex = 2;
             // 
             // labelHeader
             // 
             labelHeader.Anchor = AnchorStyles.Top;
             labelHeader.AutoSize = true;
-            labelHeader.Font = new Font("Montserrat", 19.7999973F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelHeader.Font = new Font("Microsoft Sans Serif", 19.7999973F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelHeader.ForeColor = SystemColors.ButtonHighlight;
-            labelHeader.Location = new Point(441, 12);
+            labelHeader.Location = new Point(387, 9);
             labelHeader.Name = "labelHeader";
-            labelHeader.Size = new Size(399, 52);
+            labelHeader.Size = new Size(296, 31);
             labelHeader.TabIndex = 0;
             labelHeader.Text = "Rafi Medical Complex";
             // 
@@ -83,11 +86,11 @@
             // 
             labelHeader2.Anchor = AnchorStyles.None;
             labelHeader2.AutoSize = true;
-            labelHeader2.Font = new Font("Poppins", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelHeader2.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelHeader2.ForeColor = SystemColors.ActiveCaptionText;
-            labelHeader2.Location = new Point(474, 149);
+            labelHeader2.Location = new Point(412, 101);
             labelHeader2.Name = "labelHeader2";
-            labelHeader2.Size = new Size(330, 36);
+            labelHeader2.Size = new Size(242, 20);
             labelHeader2.TabIndex = 3;
             labelHeader2.Text = "Appointment Receipt System";
             // 
@@ -96,11 +99,12 @@
             btnOPD.Anchor = AnchorStyles.None;
             btnOPD.BackColor = Color.FromArgb(91, 42, 134);
             btnOPD.FlatStyle = FlatStyle.Flat;
-            btnOPD.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnOPD.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnOPD.ForeColor = SystemColors.ButtonHighlight;
-            btnOPD.Location = new Point(50, 56);
+            btnOPD.Location = new Point(44, 42);
+            btnOPD.Margin = new Padding(3, 2, 3, 2);
             btnOPD.Name = "btnOPD";
-            btnOPD.Size = new Size(150, 50);
+            btnOPD.Size = new Size(131, 38);
             btnOPD.TabIndex = 1;
             btnOPD.Text = "OPD [F1]";
             btnOPD.UseVisualStyleBackColor = false;
@@ -111,11 +115,11 @@
             labelMainFeature.Anchor = AnchorStyles.Top;
             labelMainFeature.AutoSize = true;
             labelMainFeature.BackColor = Color.WhiteSmoke;
-            labelMainFeature.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelMainFeature.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelMainFeature.ForeColor = Color.FromArgb(91, 42, 134);
-            labelMainFeature.Location = new Point(50, 9);
+            labelMainFeature.Location = new Point(44, 7);
             labelMainFeature.Name = "labelMainFeature";
-            labelMainFeature.Size = new Size(144, 30);
+            labelMainFeature.Size = new Size(110, 17);
             labelMainFeature.TabIndex = 0;
             labelMainFeature.Text = "Main Receipts";
             // 
@@ -124,11 +128,12 @@
             btnUSG.Anchor = AnchorStyles.None;
             btnUSG.BackColor = Color.FromArgb(91, 42, 134);
             btnUSG.FlatStyle = FlatStyle.Flat;
-            btnUSG.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnUSG.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnUSG.ForeColor = SystemColors.ButtonHighlight;
-            btnUSG.Location = new Point(50, 120);
+            btnUSG.Location = new Point(44, 90);
+            btnUSG.Margin = new Padding(3, 2, 3, 2);
             btnUSG.Name = "btnUSG";
-            btnUSG.Size = new Size(150, 50);
+            btnUSG.Size = new Size(131, 38);
             btnUSG.TabIndex = 2;
             btnUSG.Text = "USG [F2]";
             btnUSG.UseVisualStyleBackColor = false;
@@ -139,11 +144,12 @@
             btnECG.Anchor = AnchorStyles.None;
             btnECG.BackColor = Color.FromArgb(91, 42, 134);
             btnECG.FlatStyle = FlatStyle.Flat;
-            btnECG.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnECG.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnECG.ForeColor = SystemColors.ButtonHighlight;
-            btnECG.Location = new Point(50, 185);
+            btnECG.Location = new Point(44, 139);
+            btnECG.Margin = new Padding(3, 2, 3, 2);
             btnECG.Name = "btnECG";
-            btnECG.Size = new Size(150, 50);
+            btnECG.Size = new Size(131, 38);
             btnECG.TabIndex = 3;
             btnECG.Text = "ECG [F3]";
             btnECG.UseVisualStyleBackColor = false;
@@ -153,11 +159,11 @@
             // 
             labelOtherReceipt.Anchor = AnchorStyles.Top;
             labelOtherReceipt.AutoSize = true;
-            labelOtherReceipt.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelOtherReceipt.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelOtherReceipt.ForeColor = Color.FromArgb(91, 42, 134);
-            labelOtherReceipt.Location = new Point(55, 10);
+            labelOtherReceipt.Location = new Point(48, 4);
             labelOtherReceipt.Name = "labelOtherReceipt";
-            labelOtherReceipt.Size = new Size(151, 30);
+            labelOtherReceipt.Size = new Size(117, 17);
             labelOtherReceipt.TabIndex = 0;
             labelOtherReceipt.Text = "Other Receipts";
             // 
@@ -168,11 +174,12 @@
             btnDrZain.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDrZain.FlatAppearance.BorderSize = 2;
             btnDrZain.FlatStyle = FlatStyle.Flat;
-            btnDrZain.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDrZain.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDrZain.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDrZain.Location = new Point(37, 56);
+            btnDrZain.Location = new Point(32, 36);
+            btnDrZain.Margin = new Padding(3, 2, 3, 2);
             btnDrZain.Name = "btnDrZain";
-            btnDrZain.Size = new Size(182, 50);
+            btnDrZain.Size = new Size(159, 38);
             btnDrZain.TabIndex = 1;
             btnDrZain.Text = "Dr Zain [F4]";
             btnDrZain.UseVisualStyleBackColor = false;
@@ -185,11 +192,12 @@
             btnDrHammad.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDrHammad.FlatAppearance.BorderSize = 2;
             btnDrHammad.FlatStyle = FlatStyle.Flat;
-            btnDrHammad.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDrHammad.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDrHammad.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDrHammad.Location = new Point(37, 257);
+            btnDrHammad.Location = new Point(32, 177);
+            btnDrHammad.Margin = new Padding(3, 2, 3, 2);
             btnDrHammad.Name = "btnDrHammad";
-            btnDrHammad.Size = new Size(182, 50);
+            btnDrHammad.Size = new Size(159, 38);
             btnDrHammad.TabIndex = 3;
             btnDrHammad.Text = "Dr Hammad [F7]";
             btnDrHammad.UseVisualStyleBackColor = false;
@@ -202,11 +210,12 @@
             btnDrJawad.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDrJawad.FlatAppearance.BorderSize = 2;
             btnDrJawad.FlatStyle = FlatStyle.Flat;
-            btnDrJawad.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDrJawad.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDrJawad.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDrJawad.Location = new Point(37, 185);
+            btnDrJawad.Location = new Point(32, 129);
+            btnDrJawad.Margin = new Padding(3, 2, 3, 2);
             btnDrJawad.Name = "btnDrJawad";
-            btnDrJawad.Size = new Size(182, 50);
+            btnDrJawad.Size = new Size(159, 38);
             btnDrJawad.TabIndex = 2;
             btnDrJawad.Text = "Dr Jawad [F6]";
             btnDrJawad.UseVisualStyleBackColor = false;
@@ -216,11 +225,11 @@
             // 
             labelSystem.Anchor = AnchorStyles.Top;
             labelSystem.AutoSize = true;
-            labelSystem.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelSystem.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelSystem.ForeColor = Color.FromArgb(91, 42, 134);
-            labelSystem.Location = new Point(38, 14);
+            labelSystem.Location = new Point(33, 10);
             labelSystem.Name = "labelSystem";
-            labelSystem.Size = new Size(202, 30);
+            labelSystem.Size = new Size(153, 17);
             labelSystem.TabIndex = 0;
             labelSystem.Text = "System Preferances";
             // 
@@ -229,13 +238,14 @@
             btnHistory.Anchor = AnchorStyles.Top;
             btnHistory.BackColor = Color.WhiteSmoke;
             btnHistory.FlatStyle = FlatStyle.Flat;
-            btnHistory.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnHistory.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnHistory.ForeColor = Color.Red;
-            btnHistory.Location = new Point(38, 47);
+            btnHistory.Location = new Point(33, 35);
+            btnHistory.Margin = new Padding(3, 2, 3, 2);
             btnHistory.Name = "btnHistory";
-            btnHistory.Size = new Size(150, 50);
+            btnHistory.Size = new Size(131, 38);
             btnHistory.TabIndex = 1;
-            btnHistory.Text = "Records [F9]";
+            btnHistory.Text = "Records [F11]";
             btnHistory.UseVisualStyleBackColor = false;
             btnHistory.Click += btnHistory_Click;
             // 
@@ -246,13 +256,14 @@
             btnOtherReceipt.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnOtherReceipt.FlatAppearance.BorderSize = 2;
             btnOtherReceipt.FlatStyle = FlatStyle.Flat;
-            btnOtherReceipt.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnOtherReceipt.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnOtherReceipt.ForeColor = Color.FromArgb(91, 42, 134);
-            btnOtherReceipt.Location = new Point(37, 318);
+            btnOtherReceipt.Location = new Point(32, 316);
+            btnOtherReceipt.Margin = new Padding(3, 2, 3, 2);
             btnOtherReceipt.Name = "btnOtherReceipt";
-            btnOtherReceipt.Size = new Size(182, 50);
+            btnOtherReceipt.Size = new Size(159, 38);
             btnOtherReceipt.TabIndex = 4;
-            btnOtherReceipt.Text = "Other [F8]";
+            btnOtherReceipt.Text = "Other [F10]";
             btnOtherReceipt.UseVisualStyleBackColor = false;
             btnOtherReceipt.Click += btnOtherReceipt_Click;
             // 
@@ -261,13 +272,14 @@
             btnAdminPrices.Anchor = AnchorStyles.Top;
             btnAdminPrices.BackColor = Color.WhiteSmoke;
             btnAdminPrices.FlatStyle = FlatStyle.Flat;
-            btnAdminPrices.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAdminPrices.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAdminPrices.ForeColor = Color.Red;
-            btnAdminPrices.Location = new Point(201, 47);
+            btnAdminPrices.Location = new Point(176, 35);
+            btnAdminPrices.Margin = new Padding(3, 2, 3, 2);
             btnAdminPrices.Name = "btnAdminPrices";
-            btnAdminPrices.Size = new Size(150, 50);
+            btnAdminPrices.Size = new Size(131, 38);
             btnAdminPrices.TabIndex = 2;
-            btnAdminPrices.Text = "Prices [F10]";
+            btnAdminPrices.Text = "Prices [F12]";
             btnAdminPrices.UseVisualStyleBackColor = false;
             btnAdminPrices.Click += btnAdminPrices_Click;
             // 
@@ -280,24 +292,28 @@
             panelMainButtons.Controls.Add(btnECG);
             panelMainButtons.Controls.Add(btnUSG);
             panelMainButtons.Controls.Add(labelMainFeature);
-            panelMainButtons.Location = new Point(336, 188);
+            panelMainButtons.Location = new Point(291, 130);
+            panelMainButtons.Margin = new Padding(3, 2, 3, 2);
             panelMainButtons.Name = "panelMainButtons";
-            panelMainButtons.Size = new Size(242, 257);
+            panelMainButtons.Size = new Size(212, 193);
             panelMainButtons.TabIndex = 1;
             // 
             // panelOtherButton
             // 
             panelOtherButton.Anchor = AnchorStyles.None;
             panelOtherButton.BorderStyle = BorderStyle.FixedSingle;
+            panelOtherButton.Controls.Add(btnDrZuhaib);
+            panelOtherButton.Controls.Add(btnDrTehreem);
             panelOtherButton.Controls.Add(btnDrFizza);
             panelOtherButton.Controls.Add(labelOtherReceipt);
             panelOtherButton.Controls.Add(btnDrZain);
             panelOtherButton.Controls.Add(btnDrJawad);
             panelOtherButton.Controls.Add(btnOtherReceipt);
             panelOtherButton.Controls.Add(btnDrHammad);
-            panelOtherButton.Location = new Point(708, 188);
+            panelOtherButton.Location = new Point(617, 130);
+            panelOtherButton.Margin = new Padding(3, 2, 3, 2);
             panelOtherButton.Name = "panelOtherButton";
-            panelOtherButton.Size = new Size(247, 384);
+            panelOtherButton.Size = new Size(216, 364);
             panelOtherButton.TabIndex = 2;
             // 
             // btnDrFizza
@@ -307,11 +323,12 @@
             btnDrFizza.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDrFizza.FlatAppearance.BorderSize = 2;
             btnDrFizza.FlatStyle = FlatStyle.Flat;
-            btnDrFizza.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDrFizza.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDrFizza.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDrFizza.Location = new Point(37, 120);
+            btnDrFizza.Location = new Point(32, 82);
+            btnDrFizza.Margin = new Padding(3, 2, 3, 2);
             btnDrFizza.Name = "btnDrFizza";
-            btnDrFizza.Size = new Size(182, 50);
+            btnDrFizza.Size = new Size(159, 38);
             btnDrFizza.TabIndex = 5;
             btnDrFizza.Text = "Dr Fizza [F5]";
             btnDrFizza.UseVisualStyleBackColor = false;
@@ -325,9 +342,10 @@
             panelAdmin.Controls.Add(labelSystem);
             panelAdmin.Controls.Add(btnHistory);
             panelAdmin.Controls.Add(btnAdminPrices);
-            panelAdmin.Location = new Point(336, 451);
+            panelAdmin.Location = new Point(291, 369);
+            panelAdmin.Margin = new Padding(3, 2, 3, 2);
             panelAdmin.Name = "panelAdmin";
-            panelAdmin.Size = new Size(364, 166);
+            panelAdmin.Size = new Size(319, 125);
             panelAdmin.TabIndex = 3;
             // 
             // btnReturnReceipt
@@ -335,13 +353,14 @@
             btnReturnReceipt.Anchor = AnchorStyles.Top;
             btnReturnReceipt.BackColor = Color.WhiteSmoke;
             btnReturnReceipt.FlatStyle = FlatStyle.Flat;
-            btnReturnReceipt.Font = new Font("Poppins", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnReturnReceipt.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnReturnReceipt.ForeColor = Color.Red;
-            btnReturnReceipt.Location = new Point(83, 103);
+            btnReturnReceipt.Location = new Point(73, 77);
+            btnReturnReceipt.Margin = new Padding(3, 2, 3, 2);
             btnReturnReceipt.Name = "btnReturnReceipt";
-            btnReturnReceipt.Size = new Size(222, 50);
+            btnReturnReceipt.Size = new Size(194, 38);
             btnReturnReceipt.TabIndex = 3;
-            btnReturnReceipt.Text = "Return Receipt [F11]";
+            btnReturnReceipt.Text = "Return Receipt";
             btnReturnReceipt.UseVisualStyleBackColor = false;
             btnReturnReceipt.Click += btnReturnReceipt_Click;
             // 
@@ -349,19 +368,56 @@
             // 
             boxSignature.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             boxSignature.Image = Properties.Resources.devusama_siganture1;
-            boxSignature.Location = new Point(1068, 570);
+            boxSignature.Location = new Point(934, 528);
+            boxSignature.Margin = new Padding(3, 2, 3, 2);
             boxSignature.Name = "boxSignature";
-            boxSignature.Size = new Size(182, 91);
+            boxSignature.Size = new Size(159, 68);
             boxSignature.SizeMode = PictureBoxSizeMode.Zoom;
             boxSignature.TabIndex = 4;
             boxSignature.TabStop = false;
             // 
+            // btnDrTehreem
+            // 
+            btnDrTehreem.Anchor = AnchorStyles.Top;
+            btnDrTehreem.BackColor = Color.WhiteSmoke;
+            btnDrTehreem.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDrTehreem.FlatAppearance.BorderSize = 2;
+            btnDrTehreem.FlatStyle = FlatStyle.Flat;
+            btnDrTehreem.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDrTehreem.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDrTehreem.Location = new Point(32, 223);
+            btnDrTehreem.Margin = new Padding(3, 2, 3, 2);
+            btnDrTehreem.Name = "btnDrTehreem";
+            btnDrTehreem.Size = new Size(159, 38);
+            btnDrTehreem.TabIndex = 6;
+            btnDrTehreem.Text = "Dr Tehreem [F8]";
+            btnDrTehreem.UseVisualStyleBackColor = false;
+            btnDrTehreem.Click += btnDrTehreem_Click;
+            // 
+            // btnDrZuhaib
+            // 
+            btnDrZuhaib.Anchor = AnchorStyles.Top;
+            btnDrZuhaib.BackColor = Color.WhiteSmoke;
+            btnDrZuhaib.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDrZuhaib.FlatAppearance.BorderSize = 2;
+            btnDrZuhaib.FlatStyle = FlatStyle.Flat;
+            btnDrZuhaib.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDrZuhaib.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDrZuhaib.Location = new Point(32, 269);
+            btnDrZuhaib.Margin = new Padding(3, 2, 3, 2);
+            btnDrZuhaib.Name = "btnDrZuhaib";
+            btnDrZuhaib.Size = new Size(159, 38);
+            btnDrZuhaib.TabIndex = 7;
+            btnDrZuhaib.Text = "Dr Zuhaib [F9]";
+            btnDrZuhaib.UseVisualStyleBackColor = false;
+            btnDrZuhaib.Click += btnDrZuhaib_Click;
+            // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(1262, 673);
+            ClientSize = new Size(1106, 611);
             Controls.Add(boxSignature);
             Controls.Add(panelAdmin);
             Controls.Add(panelOtherButton);
@@ -370,7 +426,8 @@
             Controls.Add(panelHeader);
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
-            MinimumSize = new Size(1280, 720);
+            Margin = new Padding(3, 2, 3, 2);
+            MinimumSize = new Size(1122, 550);
             Name = "MainForm";
             Text = "Rafi Medical Complex";
             panelHeader.ResumeLayout(false);
@@ -408,5 +465,7 @@
         private Button btnDrFizza;
         private Button btnReturnReceipt;
         private PictureBox boxSignature;
+        private Button btnDrZuhaib;
+        private Button btnDrTehreem;
     }
 }

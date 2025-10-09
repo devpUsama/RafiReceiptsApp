@@ -79,9 +79,13 @@ namespace RafiReceiptsApp
         private void btnPrintSummary_Click(object? sender, EventArgs e)
         {
             var pd = new PrintDocument();
-            // zero margins + custom 3" width
+            // 1) Set margins to zero
             pd.DefaultPageSettings.Margins = new Margins(0, 0, 0, 0);
-            pd.DefaultPageSettings.PaperSize = new PaperSize("Custom", 300, 20000);
+
+            // 2) Define a custom paper size of 3" wide (300 hundredths of an inch)
+            //    height can be large—printer will cut at end of content.
+            PaperSize ps = new PaperSize("Custom", 300, 20000);
+            pd.DefaultPageSettings.PaperSize = ps;
             pd.PrintPage += PrintSummaryPage;
             pd.Print();
         }
@@ -89,51 +93,172 @@ namespace RafiReceiptsApp
         private void PrintSummaryPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics!;
-            var bounds = e.MarginBounds;
-            float x = bounds.Left, y = bounds.Top, w = bounds.Width;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-            // fonts
-            var headerFont = new Font("Arial", 16, FontStyle.Bold);
-            var labelFont = new Font("Arial", 10, FontStyle.Regular);
-            var valueFont = new Font("Arial", 10, FontStyle.Bold);
+            // Use the graphics visible clip (actual printable area in device units/pixels)
+            var clip = g.VisibleClipBounds;
+            float dpiX = g.DpiX;
+            float dpiY = g.DpiY;
 
-            // 1) RMC header
-            var hdr = "RMC";
-            g.DrawString(hdr, headerFont, Brushes.Black,
-                new RectangleF(x, y, w, headerFont.GetHeight(g)),
-                new StringFormat { Alignment = StringAlignment.Center });
-            y += headerFont.GetHeight(g) + 5;
+            // Safe padding in device pixels: at least 12px or ~0.04in, whichever is larger.
+            float safePad = Math.Max(12f, dpiX * 0.04f);
 
-            // 2) Subtitle with token type & date
-            string subtitle = $"{_tokenType} Summary for {DateTime.Today:yyyy-MM-dd}";
-            g.DrawString(subtitle, labelFont, Brushes.Black,
-                new RectangleF(x, y, w, labelFont.GetHeight(g)),
-                new StringFormat { Alignment = StringAlignment.Center });
-            y += labelFont.GetHeight(g) + 5;
+            float left = clip.Left + safePad;
+            float top = clip.Top + safePad;
+            float width = Math.Max(8f, clip.Width - safePad * 2f);
+            float bottom = clip.Bottom - safePad;
+            float y = top;
 
-            // 3) Horizontal line
-            g.DrawLine(Pens.Black, x, y, x + w, y);
-            y += 8;
+            float sectionSpacing = 10f;
+            float lineSpacing = 6f;
 
-            // 4) Total tokens
-            int count = _todayList.Count;
-            decimal sum = _todayList.Sum(r => r.Fee);
+            using (var centerFmt = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+            using (var leftTopFmt = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near })
+            using (var wrapFmt = new StringFormat(StringFormatFlags.LineLimit)
+            {
+                Trimming = StringTrimming.EllipsisCharacter,
+                Alignment = StringAlignment.Near,
+                LineAlignment = StringAlignment.Near
+            })
+            using (var headerFont = new Font("Georgia", 16, FontStyle.Bold))
+            using (var subHeaderFont = new Font("Segoe UI", 9, FontStyle.Regular))
+            using (var sectionTitleFont = new Font("Segoe UI", 10, FontStyle.Bold))
+            using (var labelFont = new Font("Segoe UI", 9, FontStyle.Regular))
+            using (var valueFont = new Font("Segoe UI", 11, FontStyle.Bold))
+            using (var footerFont = new Font("Segoe UI", 9, FontStyle.Italic))
+            {
+                static string S(object? o) => o?.ToString() ?? string.Empty;
 
-            g.DrawString("Total Tokens:", labelFont, Brushes.Black, x, y);
-            g.DrawString(count.ToString(), valueFont, Brushes.Black, x + 100, y);
-            y += labelFont.GetHeight(g) + 5;
+                void DrawDashedLine(float yPos)
+                {
+                    using var pen = new Pen(Color.Black, 1) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot };
+                    g.DrawLine(pen, left, yPos, left + width, yPos);
+                }
 
-            // 5) Total amount
-            g.DrawString("Total Amount:", labelFont, Brushes.Black, x, y);
-            g.DrawString(sum.ToString("C"), valueFont, Brushes.Black, x + 100, y);
-            y += labelFont.GetHeight(g) + 5;
+                // Header
+                string hospitalName = "Rafi Medical Complex";
+                string hospitalAddress = "Vehari Road Hasilpur Old";
+                string generatedAt = $"Generated at: {DateTime.Now:g}";
 
-            // 6) Horizontal line
-            g.DrawLine(Pens.Black, x, y, x + w, y);
-            y += 8;
+                var hSize = g.MeasureString(hospitalName, headerFont);
+                g.DrawString(hospitalName, headerFont, Brushes.Black, new RectangleF(left, y, width, hSize.Height), centerFmt);
+                y += hSize.Height + 4;
 
-            e.HasMorePages = false;
+                var addrSize = g.MeasureString(hospitalAddress, subHeaderFont);
+                g.DrawString(hospitalAddress, subHeaderFont, Brushes.Black, new RectangleF(left, y, width, addrSize.Height), centerFmt);
+                y += addrSize.Height + 6;
+
+                var genSize = g.MeasureString(generatedAt, subHeaderFont);
+                g.DrawString(generatedAt, subHeaderFont, Brushes.Black, new RectangleF(left, y, width, genSize.Height), centerFmt);
+                y += genSize.Height + 8;
+
+                // Title for this summary
+                string title = $"{S(_tokenType)} Summary for {DateTime.Today:yyyy-MM-dd}";
+                var tSize = g.MeasureString(title, sectionTitleFont);
+                g.DrawString(title, sectionTitleFont, Brushes.Black, new RectangleF(left, y, width, tSize.Height), centerFmt);
+                y += tSize.Height + sectionSpacing;
+
+                // Token Info section header
+                DrawDashedLine(y); y += 6;
+                string tokenSection = "Token Info";
+                var tsz = g.MeasureString(tokenSection, sectionTitleFont);
+                g.DrawString(tokenSection, sectionTitleFont, Brushes.Black, new RectangleF(left, y, width, tsz.Height), centerFmt);
+                y += tsz.Height + 6;
+
+                // Totals
+                int count = _todayList?.Count ?? 0;
+                decimal sum = _todayList?.Sum(r => r.Fee) ?? 0m;
+
+                float leftCol = width * 0.6f;
+                float rightCol = width - leftCol;
+
+                void DrawLabelValue(string label, string value)
+                {
+                    var lSize = g.MeasureString(label + ":", labelFont);
+                    var vSize = g.MeasureString(value, valueFont);
+                    float rowHeight = Math.Max(lSize.Height, vSize.Height);
+
+                    g.DrawString(label + ":", labelFont, Brushes.Black, new RectangleF(left, y, leftCol, rowHeight), leftTopFmt);
+                    float valX = left + leftCol + (rightCol - vSize.Width);
+                    g.DrawString(value, valueFont, Brushes.Black, new RectangleF(valX, y, vSize.Width, vSize.Height), leftTopFmt);
+
+                    y += rowHeight + lineSpacing;
+                }
+
+                DrawLabelValue("Total Tokens", count.ToString());
+                DrawLabelValue("Total Amount", sum.ToString("C"));
+
+                y += 4;
+                DrawDashedLine(y); y += sectionSpacing;
+
+                //// Details heading
+                //string detailsTitle = "Summary Details";
+                //var dTitleSize = g.MeasureString(detailsTitle, sectionTitleFont);
+                //g.DrawString(detailsTitle, sectionTitleFont, Brushes.Black, new RectangleF(left, y, width, dTitleSize.Height), centerFmt);
+                //y += dTitleSize.Height + 6;
+
+                //// Column widths for records - ensure they sum to width and leave safe margins
+                //float col1 = width * 0.12f;       // Queue#
+                //float col2 = width * 0.58f;       // ID / description
+                //float col3 = width - col1 - col2; // Fee
+
+                //// Header row (optional)
+                //// g.DrawString("Q#", labelFont, Brushes.Black, new RectangleF(left, y, col1, labelFont.GetHeight(g)), leftTopFmt);
+                //// g.DrawString("ID / Desc", labelFont, Brushes.Black, new RectangleF(left + col1, y, col2, labelFont.GetHeight(g)), leftTopFmt);
+                //// g.DrawString("Fee", labelFont, Brushes.Black, new RectangleF(left + col1 + col2, y, col3, labelFont.GetHeight(g)), leftTopFmt);
+                //// y += labelFont.GetHeight(g) + lineSpacing;
+
+                //// Print each record using measured column widths so nothing spills over paper.
+                //foreach (var r in _todayList ?? Enumerable.Empty<Receipt>())
+                //{
+                //    string q = S(r.QueueNumber);
+                //    string id = S(r.Id);
+                //    // If you want to show patient name or other short desc, replace id with that.
+                //    string fee = r.Fee.ToString("F2");
+
+                //    // Measure wrapped heights for each column (limit per-column width)
+                //    var qSize = g.MeasureString(q, labelFont, new SizeF(col1, float.MaxValue), wrapFmt);
+                //    var idSizeRec = g.MeasureString(id, labelFont, new SizeF(col2, float.MaxValue), wrapFmt);
+                //    var feeSize = g.MeasureString(fee, labelFont, new SizeF(col3, float.MaxValue), wrapFmt);
+
+                //    float rowH = Math.Max(qSize.Height, Math.Max(idSizeRec.Height, feeSize.Height));
+
+                //    // Reserve footer space; stop if no room
+                //    if (y + rowH > bottom - 60)
+                //    {
+                //        // indicate more records truncated
+                //        g.DrawString("...", labelFont, Brushes.Black, new RectangleF(left, y, width, labelFont.GetHeight(g)), leftTopFmt);
+                //        y += labelFont.GetHeight(g) + lineSpacing;
+                //        break;
+                //    }
+
+                //    // Draw each column within its column rectangle (wrap-safe)
+                //    g.DrawString(q, labelFont, Brushes.Black, new RectangleF(left, y, col1, rowH), wrapFmt);
+                //    g.DrawString(id, labelFont, Brushes.Black, new RectangleF(left + col1, y, col2, rowH), wrapFmt);
+
+                //    // Right-align fee within col3
+                //    var measuredFee = g.MeasureString(fee, labelFont, new SizeF(col3, rowH), wrapFmt);
+                //    float feeX = left + col1 + col2 + (col3 - measuredFee.Width);
+                //    g.DrawString(fee, labelFont, Brushes.Black, new RectangleF(feeX, y, measuredFee.Width, measuredFee.Height), wrapFmt);
+
+                //    y += rowH + lineSpacing;
+                //}
+
+                // Footer - leave small gap then draw footer centered
+                //y = Math.Min(y + 6, bottom - 40);
+                //DrawDashedLine(y); 
+                //y += 8;
+                string footer = "Thank you for your Service";
+                var fSize = g.MeasureString(footer, footerFont);
+                g.DrawString(footer, footerFont, Brushes.Black, new RectangleF(left, y, width, fSize.Height), centerFmt);
+                y += fSize.Height + 6;
+                DrawDashedLine(y);
+
+                e.HasMorePages = false;
+            }
         }
+
+
 
         private void dgvRecords_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {

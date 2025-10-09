@@ -86,17 +86,54 @@ namespace RafiReceiptsApp
 
         private bool ConfirmUpdate()
         {
-            string password = Microsoft.VisualBasic.Interaction.InputBox(
-                "Enter the Updation password:", "Confirm Update", "");
-            // Hardcode your password here (for example: "admin123")
-            if (password == "rmc@890")
-                return true;
-            else
+            // Create a tiny modal form at runtime (no designer, no extra files)
+            using (Form prompt = new Form())
             {
-                MessageBox.Show("Incorrect password. Update aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                prompt.Width = 380;
+                prompt.Height = 140;
+                prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                prompt.StartPosition = FormStartPosition.CenterParent;
+                prompt.MinimizeBox = false;
+                prompt.MaximizeBox = false;
+                prompt.ShowInTaskbar = false;
+                prompt.Text = "Confirm Update";
+
+                Label textLabel = new Label() { Left = 12, Top = 12, Width = 340, Text = "Enter the Updation password:" };
+                TextBox inputBox = new TextBox() { Left = 12, Top = 36, Width = 340 };
+
+                // MAKE IT MASKED
+                inputBox.UseSystemPasswordChar = true; // -> hides characters / shows bullets
+
+                Button okButton = new Button() { Text = "OK", Left = 190, Width = 80, Top = 70, DialogResult = DialogResult.OK };
+                Button cancelButton = new Button() { Text = "Cancel", Left = 272, Width = 80, Top = 70, DialogResult = DialogResult.Cancel };
+
+                prompt.Controls.Add(textLabel);
+                prompt.Controls.Add(inputBox);
+                prompt.Controls.Add(okButton);
+                prompt.Controls.Add(cancelButton);
+
+                prompt.AcceptButton = okButton;
+                prompt.CancelButton = cancelButton;
+
+                if (prompt.ShowDialog(this) == DialogResult.OK)
+                {
+                    string password = inputBox.Text ?? string.Empty;
+
+                    // compare securely (still avoiding plaintext storage in production)
+                    if (string.Equals(password, "rmc786!", StringComparison.Ordinal))
+                        return true;
+
+                    MessageBox.Show("Incorrect password. Update aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                else
+                {
+                    // Cancel pressed
+                    return false;
+                }
             }
         }
+
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -138,23 +175,60 @@ namespace RafiReceiptsApp
             this.Close();
         }
 
-        private bool ConfirmDeletion()
+        private bool ConfirmDelete()
         {
-            string password = Microsoft.VisualBasic.Interaction.InputBox(
-                "Enter the deletion password:", "Confirm Deletion", "");
-            // Hardcode your password here (for example: "admin123")
-            if (password == "Ghost@rmc")
-                return true;
-            else
+            // Create a tiny modal form at runtime (no designer, no extra files)
+            using (Form prompt = new Form())
             {
-                MessageBox.Show("Incorrect password. Deletion aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                prompt.Width = 380;
+                prompt.Height = 140;
+                prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                prompt.StartPosition = FormStartPosition.CenterParent;
+                prompt.MinimizeBox = false;
+                prompt.MaximizeBox = false;
+                prompt.ShowInTaskbar = false;
+                prompt.Text = "Confirm Delete";
+
+                Label textLabel = new Label() { Left = 12, Top = 12, Width = 340, Text = "Enter the Deletion password:" };
+                TextBox inputBox = new TextBox() { Left = 12, Top = 36, Width = 340 };
+
+                // MAKE IT MASKED
+                inputBox.UseSystemPasswordChar = true; // -> hides characters / shows bullets
+
+                Button okButton = new Button() { Text = "OK", Left = 190, Width = 80, Top = 70, DialogResult = DialogResult.OK };
+                Button cancelButton = new Button() { Text = "Cancel", Left = 272, Width = 80, Top = 70, DialogResult = DialogResult.Cancel };
+
+                prompt.Controls.Add(textLabel);
+                prompt.Controls.Add(inputBox);
+                prompt.Controls.Add(okButton);
+                prompt.Controls.Add(cancelButton);
+
+                prompt.AcceptButton = okButton;
+                prompt.CancelButton = cancelButton;
+
+                if (prompt.ShowDialog(this) == DialogResult.OK)
+                {
+                    string password = inputBox.Text ?? string.Empty;
+
+                    // compare securely (still avoiding plaintext storage in production)
+                    if (string.Equals(password, "Ghost@RMC", StringComparison.Ordinal))
+                        return true;
+
+                    MessageBox.Show("Incorrect password. Delete aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                else
+                {
+                    // Cancel pressed
+                    return false;
+                }
             }
         }
 
+
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (!ConfirmDeletion())
+            if (!ConfirmDelete())
                 return;
 
             try

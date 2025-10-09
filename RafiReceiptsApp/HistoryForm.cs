@@ -134,54 +134,77 @@ namespace RafiReceiptsApp
                     .Where(r => r.CreatedAt.Date == today)
                     .ToList();
 
-                // Summaries for standard types.
-                int opdCount = todaysReceipts.Where(r => r.TokenType == "OPD").Count();
-                decimal opdTotal = todaysReceipts.Where(r => r.TokenType == "OPD").Sum(r => (decimal?)r.Fee) ?? 0m;
+                // Query receipts for the current month.
+                var monthReceipts = context.Receipts
+                    .Where(r => r.CreatedAt.Year == currentYear && r.CreatedAt.Month == currentMonth)
+                    .ToList();
 
-                int ecgCount = todaysReceipts.Where(r => r.TokenType == "ECG").Count();
-                decimal ecgTotal = todaysReceipts.Where(r => r.TokenType == "ECG").Sum(r => (decimal?)r.Fee) ?? 0m;
+                // Helper local func to compute counts/totals by token type for a given set
+                (int count, decimal total) ByType(List<Receipt> source, string tokenType)
+                {
+                    var q = source.Where(r => r.TokenType == tokenType);
+                    int c = q.Count();
+                    decimal t = q.Sum(r => (decimal?)r.Fee) ?? 0m;
+                    return (c, t);
+                }
 
-                int usgCount = todaysReceipts.Where(r => r.TokenType == "USG").Count();
-                decimal usgTotal = todaysReceipts.Where(r => r.TokenType == "USG").Sum(r => (decimal?)r.Fee) ?? 0m;
-
-                // Summaries for doctor tokens.
-                int drZainCount = todaysReceipts.Where(r => r.TokenType == "Dr Zain").Count();
-                decimal drZainTotal = todaysReceipts.Where(r => r.TokenType == "Dr Zain").Sum(r => (decimal?)r.Fee) ?? 0m;
-
-                int drHammadCount = todaysReceipts.Where(r => r.TokenType == "Dr Hammad").Count();
-                decimal drHammadTotal = todaysReceipts.Where(r => r.TokenType == "Dr Hammad").Sum(r => (decimal?)r.Fee) ?? 0m;
-
-                int drJawadCount = todaysReceipts.Where(r => r.TokenType == "Dr Jawad").Count();
-                decimal drJawadTotal = todaysReceipts.Where(r => r.TokenType == "Dr Jawad").Sum(r => (decimal?)r.Fee) ?? 0m;
-
-                int drFizzaCount = todaysReceipts.Where(r => r.TokenType == "Dr Fizza").Count();
-                decimal drFizzaTotal = todaysReceipts.Where(r => r.TokenType == "Dr Fizza").Sum(r => (decimal?)r.Fee) ?? 0m;
-
-                // Summaries for 'Others'
-                int othersCount = todaysReceipts.Where(r => r.TokenType == "Others").Count();
-                decimal othersTotal = todaysReceipts.Where(r => r.TokenType == "Others").Sum(r => (decimal?)r.Fee) ?? 0m;
+                // --- DAILY Summaries (unchanged behavior) ---
+                var opd = ByType(todaysReceipts, "OPD");
+                var ecg = ByType(todaysReceipts, "ECG");
+                var usg = ByType(todaysReceipts, "USG");
+                var drZain = ByType(todaysReceipts, "Dr Zain");
+                var drHammad = ByType(todaysReceipts, "Dr Hammad");
+                var drJawad = ByType(todaysReceipts, "Dr Jawad");
+                var drFizza = ByType(todaysReceipts, "Dr Fizza");
+                var drTehreem = ByType(todaysReceipts, "Dr Tehreem");
+                var drZuhaib = ByType(todaysReceipts, "Dr Zuhaib");
+                var others = ByType(todaysReceipts, "Others");
 
                 int totalCountToday = todaysReceipts.Count();
                 decimal totalAmountToday = todaysReceipts.Sum(r => (decimal?)r.Fee) ?? 0m;
 
-                // Monthly Summary: Filter receipts for current month.
-                var monthReceipts = context.Receipts
-                    .Where(r => r.CreatedAt.Year == currentYear && r.CreatedAt.Month == currentMonth)
-                    .ToList();
+                // Update the DAILY labels (your existing labels)
+                lblOpdSummary.Text = $"OPD: {opd.count} tokens, Total: {opd.total:C}";
+                lblEcgSummary.Text = $"ECG: {ecg.count} tokens, Total: {ecg.total:C}";
+                lblUsgSummary.Text = $"USG: {usg.count} tokens, Total: {usg.total:C}";
+                lblDrZainSummary.Text = $"Dr Zain: {drZain.count} tokens, Total: {drZain.total:C}";
+                lblDrHammadSummary.Text = $"Dr Hammad: {drHammad.count} tokens, Total: {drHammad.total:C}";
+                lblDrJawadSummary.Text = $"Dr Jawad: {drJawad.count} tokens, Total: {drJawad.total:C}";
+                lblDrFizzaSummary.Text = $"Dr Fizza: {drFizza.count} tokens, Total: {drFizza.total:C}";
+                lblDrTehreemSummary.Text = $"Dr Tehreem: {drTehreem.count} tokens, Total: {drTehreem.total:C}";
+                lblDrZuhaibSummary.Text = $"Dr Zuhaib: {drZuhaib.count} tokens, Total: {drZuhaib.total:C}";
+                lblOthersSummary.Text = $"Others: {others.count} tokens, Total: {others.total:C}";
+
+                lblTodayTotal.Text = $"Today's Total: {totalCountToday} tokens, Amount: {totalAmountToday:C}";
+
+                // --- MONTHLY Summaries (new: compute and update per-type monthly labels) ---
+                var m_opd = ByType(monthReceipts, "OPD");
+                var m_ecg = ByType(monthReceipts, "ECG");
+                var m_usg = ByType(monthReceipts, "USG");
+                var m_drZain = ByType(monthReceipts, "Dr Zain");
+                var m_drHammad = ByType(monthReceipts, "Dr Hammad");
+                var m_drJawad = ByType(monthReceipts, "Dr Jawad");
+                var m_drFizza = ByType(monthReceipts, "Dr Fizza");
+                var m_drTehreem = ByType(monthReceipts, "Dr Tehreem");
+                var m_drZuhaib = ByType(monthReceipts, "Dr Zuhaib");
+                var m_others = ByType(monthReceipts, "Others");
+
                 int totalCountMonth = monthReceipts.Count();
                 decimal totalAmountMonth = monthReceipts.Sum(r => (decimal?)r.Fee) ?? 0m;
 
-                // Update the labels. Make sure to have corresponding labels on HistoryForm.
-                lblOpdSummary.Text = $"OPD: {opdCount} tokens, Total: {opdTotal:C}";
-                lblEcgSummary.Text = $"ECG: {ecgCount} tokens, Total: {ecgTotal:C}";
-                lblUsgSummary.Text = $"USG: {usgCount} tokens, Total: {usgTotal:C}";
-                lblDrZainSummary.Text = $"Dr Zain: {drZainCount} tokens, Total: {drZainTotal:C}";
-                lblDrHammadSummary.Text = $"Dr Hammad: {drHammadCount} tokens, Total: {drHammadTotal:C}";
-                lblDrJawadSummary.Text = $"Dr Jawad: {drJawadCount} tokens, Total: {drJawadTotal:C}";
-                lblDrFizzaSummary.Text = $"Dr Fizza: {drFizzaCount} tokens, Total: {drFizzaTotal:C}";
-                lblOthersSummary.Text = $"Others: {othersCount} tokens, Total: {othersTotal:C}";
+                // Update MONTHLY labels - NOTE: add these labels on the form with the same names
+                // e.g. lblOpdSummaryMonth, lblEcgSummaryMonth, lblUsgSummaryMonth, etc.
+                lblOpdSummaryMonth.Text = $"OPD: {m_opd.count} tokens, Total: {m_opd.total:C}";
+                lblEcgSummaryMonth.Text = $"ECG: {m_ecg.count} tokens, Total: {m_ecg.total:C}";
+                lblUsgSummaryMonth.Text = $"USG: {m_usg.count} tokens, Total: {m_usg.total:C}";
+                lblDrZainSummaryMonth.Text = $"Dr Zain: {m_drZain.count} tokens, Total: {m_drZain.total:C}";
+                lblDrHammadSummaryMonth.Text = $"Dr Hammad: {m_drHammad.count} tokens, Total: {m_drHammad.total:C}";
+                lblDrJawadSummaryMonth.Text = $"Dr Jawad: {m_drJawad.count} tokens, Total: {m_drJawad.total:C}";
+                lblDrFizzaSummaryMonth.Text = $"Dr Fizza: {m_drFizza.count} tokens, Total: {m_drFizza.total:C}";
+                lblDrTehreemSummaryMonth.Text = $"Dr Tehreem: {m_drTehreem.count} tokens, Total: {m_drTehreem.total:C}";
+                lblDrZuhaibSummaryMonth.Text = $"Dr Zuhaib: {m_drZuhaib.count} tokens, Total: {m_drZuhaib.total:C}";
+                lblOthersSummaryMonth.Text = $"Others: {m_others.count} tokens, Total: {m_others.total:C}";
 
-                lblTodayTotal.Text = $"Today's Total: {totalCountToday} tokens, Amount: {totalAmountToday:C}";
                 lblMonthTotal.Text = $"This Month: {totalCountMonth} tokens, Amount: {totalAmountMonth:C}";
             }
         }
@@ -198,6 +221,8 @@ namespace RafiReceiptsApp
                              $"Dr Fizza: {lblDrFizzaSummary.Text}\n" +
                              $"Dr Hammad: {lblDrHammadSummary.Text}\n" +
                              $"Dr Jawad: {lblDrJawadSummary.Text}\n" +
+                             $"Dr Tehreem: {lblDrTehreemSummary.Text}\n" +
+                             $"Dr Zuhaib: {lblDrZuhaibSummary.Text}\n" +
                              $"Others: {lblOthersSummary.Text}\n" +
                              $"{lblTodayTotal.Text}";
             return summary;
@@ -205,8 +230,19 @@ namespace RafiReceiptsApp
 
         private string GenerateMonthlySummaryText()
         {
-            // Build a string with monthly total.
-            string summary = $"{lblMonthTotal.Text}";
+            // Build a string mirroring the daily layout but using monthly labels.
+            // Ensure the form has the monthly labels (names used here).
+            string summary = $"OPD: {lblOpdSummaryMonth.Text}\n" +
+                             $"ECG: {lblEcgSummaryMonth.Text}\n" +
+                             $"USG: {lblUsgSummaryMonth.Text}\n" +
+                             $"Dr Zain: {lblDrZainSummaryMonth.Text}\n" +
+                             $"Dr Fizza: {lblDrFizzaSummaryMonth.Text}\n" +
+                             $"Dr Hammad: {lblDrHammadSummaryMonth.Text}\n" +
+                             $"Dr Jawad: {lblDrJawadSummaryMonth.Text}\n" +
+                             $"Dr Tehreem: {lblDrTehreemSummaryMonth.Text}\n" +
+                             $"Dr Zuhaib: {lblDrZuhaibSummaryMonth.Text}\n" +
+                             $"Others: {lblOthersSummaryMonth.Text}\n" +
+                             $"{lblMonthTotal.Text}";
             return summary;
         }
 
@@ -226,8 +262,10 @@ namespace RafiReceiptsApp
 
         private void btnPrintMonthly_Click(object sender, EventArgs e)
         {
-            string monthlySummary = GenerateMonthlySummaryText(); // your method for monthly summary text
-                                                                  // Use a representative date within the month (e.g., first day of the month)
+            // Recompute summaries so labels are fresh before printing.
+            LoadSummaryData();
+
+            string monthlySummary = GenerateMonthlySummaryText();
             DateTime monthDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             SummaryPrinter printer = new SummaryPrinter("Monthly", monthDate, monthlySummary);
             try
@@ -240,8 +278,64 @@ namespace RafiReceiptsApp
             }
         }
 
+        private bool ConfirmRePrint()
+        {
+            // Create a tiny modal form at runtime (no designer, no extra files)
+            using (Form prompt = new Form())
+            {
+                prompt.Width = 380;
+                prompt.Height = 140;
+                prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                prompt.StartPosition = FormStartPosition.CenterParent;
+                prompt.MinimizeBox = false;
+                prompt.MaximizeBox = false;
+                prompt.ShowInTaskbar = false;
+                prompt.Text = "Confirm RePrint";
+
+                Label textLabel = new Label() { Left = 12, Top = 12, Width = 340, Text = "Enter the RePrint password:" };
+                TextBox inputBox = new TextBox() { Left = 12, Top = 36, Width = 340 };
+
+                // MAKE IT MASKED
+                inputBox.UseSystemPasswordChar = true; // -> hides characters / shows bullets
+
+                Button okButton = new Button() { Text = "OK", Left = 190, Width = 80, Top = 70, DialogResult = DialogResult.OK };
+                Button cancelButton = new Button() { Text = "Cancel", Left = 272, Width = 80, Top = 70, DialogResult = DialogResult.Cancel };
+
+                prompt.Controls.Add(textLabel);
+                prompt.Controls.Add(inputBox);
+                prompt.Controls.Add(okButton);
+                prompt.Controls.Add(cancelButton);
+
+                prompt.AcceptButton = okButton;
+                prompt.CancelButton = cancelButton;
+
+                if (prompt.ShowDialog(this) == DialogResult.OK)
+                {
+                    string password = inputBox.Text ?? string.Empty;
+
+                    // compare securely (still avoiding plaintext storage in production)
+                    if (string.Equals(password, "123123", StringComparison.Ordinal))
+                        return true;
+
+                    MessageBox.Show("Incorrect password. RePrint aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                else
+                {
+                    // Cancel pressed
+                    return false;
+                }
+            }
+        }
+
+
         private void btnReprint_Click(object sender, EventArgs e)
         {
+
+            if (!ConfirmRePrint())
+                return;
+
+
             // Ensure a row is selected.
             if (dataGridHistory.CurrentRow != null)
             {
@@ -331,6 +425,23 @@ namespace RafiReceiptsApp
         {
             using var form = new DailyTypeRecordsForm("Other");
             form.ShowDialog();
+        }
+
+        private void btnDailyDrTehreem_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("Dr Tehreem");
+            form.ShowDialog();
+        }
+
+        private void btnDailyDrZuhaib_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("Dr Zuhaib");
+            form.ShowDialog();
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
