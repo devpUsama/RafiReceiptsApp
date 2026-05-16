@@ -8,10 +8,12 @@ using System.Drawing.Text;
 public class ReceiptPrinter
 {
     private readonly Receipt _receipt;
+    private readonly bool _isReprint;
 
-    public ReceiptPrinter(Receipt receipt)
+    public ReceiptPrinter(Receipt receipt, bool isReprint = false)
     {
         _receipt = receipt;
+        _isReprint = isReprint;
     }
 
     public void Print()
@@ -82,6 +84,8 @@ public class ReceiptPrinter
                 g.DrawLine(pen, left, yPos, left + width, yPos);
             }
 
+            
+
             // Header: Hospital name & address
             string hospitalName = "Rafi Medical Complex";
             string hospitalAddress = "Vehari Road Hasilpur Old";
@@ -107,6 +111,17 @@ public class ReceiptPrinter
             var stSize = g.MeasureString(sectionTitle, sectionTitleFont);
             g.DrawString(sectionTitle, sectionTitleFont, Brushes.Black, new RectangleF(left, y, width, stSize.Height), centerFmt);
             y += stSize.Height + sectionSpacing;
+
+            if (_isReprint)
+            {
+                using (var watermarkFont = new Font("Arial", 10, FontStyle.Bold))
+                {
+                    string reprintText = "*** REPRINT ***";
+                    var wmSize = g.MeasureString(reprintText, watermarkFont);
+                    g.DrawString(reprintText, watermarkFont, Brushes.Black, new RectangleF(left, y, width, wmSize.Height), centerFmt);
+                    y += wmSize.Height + 10; // Add some space below it
+                }
+            }
 
             // Section separator
             DrawDashedLine(y); y += 6;

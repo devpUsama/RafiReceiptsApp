@@ -158,6 +158,7 @@ namespace RafiReceiptsApp
                 var drFizza = ByType(todaysReceipts, "Dr Fizza");
                 var drTehreem = ByType(todaysReceipts, "Dr Tehreem");
                 var drZuhaib = ByType(todaysReceipts, "Dr Zuhaib");
+                var drMinahil = ByType(todaysReceipts, "Dr Minahil");
                 var others = ByType(todaysReceipts, "Others");
 
                 int totalCountToday = todaysReceipts.Count();
@@ -173,6 +174,7 @@ namespace RafiReceiptsApp
                 lblDrFizzaSummary.Text = $"Dr Fizza: {drFizza.count} tokens, Total: {drFizza.total:C}";
                 lblDrTehreemSummary.Text = $"Dr Tehreem: {drTehreem.count} tokens, Total: {drTehreem.total:C}";
                 lblDrZuhaibSummary.Text = $"Dr Zuhaib: {drZuhaib.count} tokens, Total: {drZuhaib.total:C}";
+                lblDrMinahilSummary.Text = $"Dr Zuhaib: {drMinahil.count} tokens, Total: {drMinahil.total:C}";
                 lblOthersSummary.Text = $"Others: {others.count} tokens, Total: {others.total:C}";
 
                 lblTodayTotal.Text = $"Today's Total: {totalCountToday} tokens, Amount: {totalAmountToday:C}";
@@ -187,6 +189,7 @@ namespace RafiReceiptsApp
                 var m_drFizza = ByType(monthReceipts, "Dr Fizza");
                 var m_drTehreem = ByType(monthReceipts, "Dr Tehreem");
                 var m_drZuhaib = ByType(monthReceipts, "Dr Zuhaib");
+                var m_drMinahil = ByType(monthReceipts, "Dr Minahil");
                 var m_others = ByType(monthReceipts, "Others");
 
                 int totalCountMonth = monthReceipts.Count();
@@ -203,6 +206,7 @@ namespace RafiReceiptsApp
                 lblDrFizzaSummaryMonth.Text = $"Dr Fizza: {m_drFizza.count} tokens, Total: {m_drFizza.total:C}";
                 lblDrTehreemSummaryMonth.Text = $"Dr Tehreem: {m_drTehreem.count} tokens, Total: {m_drTehreem.total:C}";
                 lblDrZuhaibSummaryMonth.Text = $"Dr Zuhaib: {m_drZuhaib.count} tokens, Total: {m_drZuhaib.total:C}";
+                lblDrMinahilSummaryMonth.Text = $"Dr Zuhaib: {m_drMinahil.count} tokens, Total: {m_drMinahil.total:C}";
                 lblOthersSummaryMonth.Text = $"Others: {m_others.count} tokens, Total: {m_others.total:C}";
 
                 lblMonthTotal.Text = $"This Month: {totalCountMonth} tokens, Amount: {totalAmountMonth:C}";
@@ -223,6 +227,7 @@ namespace RafiReceiptsApp
                              $"Dr Jawad: {lblDrJawadSummary.Text}\n" +
                              $"Dr Tehreem: {lblDrTehreemSummary.Text}\n" +
                              $"Dr Zuhaib: {lblDrZuhaibSummary.Text}\n" +
+                             $"Dr Minahil: {lblDrMinahilSummary.Text}\n" +
                              $"Others: {lblOthersSummary.Text}\n" +
                              $"{lblTodayTotal.Text}";
             return summary;
@@ -241,6 +246,7 @@ namespace RafiReceiptsApp
                              $"Dr Jawad: {lblDrJawadSummaryMonth.Text}\n" +
                              $"Dr Tehreem: {lblDrTehreemSummaryMonth.Text}\n" +
                              $"Dr Zuhaib: {lblDrZuhaibSummaryMonth.Text}\n" +
+                             $"Dr Minahil: {lblDrMinahilSummaryMonth.Text}\n" +
                              $"Others: {lblOthersSummaryMonth.Text}\n" +
                              $"{lblMonthTotal.Text}";
             return summary;
@@ -278,62 +284,62 @@ namespace RafiReceiptsApp
             }
         }
 
-        private bool ConfirmRePrint()
-        {
-            // Create a tiny modal form at runtime (no designer, no extra files)
-            using (Form prompt = new Form())
-            {
-                prompt.Width = 380;
-                prompt.Height = 140;
-                prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
-                prompt.StartPosition = FormStartPosition.CenterParent;
-                prompt.MinimizeBox = false;
-                prompt.MaximizeBox = false;
-                prompt.ShowInTaskbar = false;
-                prompt.Text = "Confirm RePrint";
+        //private bool ConfirmRePrint()
+        //{
+        //    // Create a tiny modal form at runtime (no designer, no extra files)
+        //    using (Form prompt = new Form())
+        //    {
+        //        prompt.Width = 380;
+        //        prompt.Height = 140;
+        //        prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+        //        prompt.StartPosition = FormStartPosition.CenterParent;
+        //        prompt.MinimizeBox = false;
+        //        prompt.MaximizeBox = false;
+        //        prompt.ShowInTaskbar = false;
+        //        prompt.Text = "Confirm RePrint";
 
-                Label textLabel = new Label() { Left = 12, Top = 12, Width = 340, Text = "Enter the RePrint password:" };
-                TextBox inputBox = new TextBox() { Left = 12, Top = 36, Width = 340 };
+        //        Label textLabel = new Label() { Left = 12, Top = 12, Width = 340, Text = "Enter the RePrint password:" };
+        //        TextBox inputBox = new TextBox() { Left = 12, Top = 36, Width = 340 };
 
-                // MAKE IT MASKED
-                inputBox.UseSystemPasswordChar = true; // -> hides characters / shows bullets
+        //        // MAKE IT MASKED
+        //        inputBox.UseSystemPasswordChar = true; // -> hides characters / shows bullets
 
-                Button okButton = new Button() { Text = "OK", Left = 190, Width = 80, Top = 70, DialogResult = DialogResult.OK };
-                Button cancelButton = new Button() { Text = "Cancel", Left = 272, Width = 80, Top = 70, DialogResult = DialogResult.Cancel };
+        //        Button okButton = new Button() { Text = "OK", Left = 190, Width = 80, Top = 70, DialogResult = DialogResult.OK };
+        //        Button cancelButton = new Button() { Text = "Cancel", Left = 272, Width = 80, Top = 70, DialogResult = DialogResult.Cancel };
 
-                prompt.Controls.Add(textLabel);
-                prompt.Controls.Add(inputBox);
-                prompt.Controls.Add(okButton);
-                prompt.Controls.Add(cancelButton);
+        //        prompt.Controls.Add(textLabel);
+        //        prompt.Controls.Add(inputBox);
+        //        prompt.Controls.Add(okButton);
+        //        prompt.Controls.Add(cancelButton);
 
-                prompt.AcceptButton = okButton;
-                prompt.CancelButton = cancelButton;
+        //        prompt.AcceptButton = okButton;
+        //        prompt.CancelButton = cancelButton;
 
-                if (prompt.ShowDialog(this) == DialogResult.OK)
-                {
-                    string password = inputBox.Text ?? string.Empty;
+        //        if (prompt.ShowDialog(this) == DialogResult.OK)
+        //        {
+        //            string password = inputBox.Text ?? string.Empty;
 
-                    // compare securely (still avoiding plaintext storage in production)
-                    if (string.Equals(password, "123123", StringComparison.Ordinal))
-                        return true;
+        //            // compare securely (still avoiding plaintext storage in production)
+        //            if (string.Equals(password, "123123", StringComparison.Ordinal))
+        //                return true;
 
-                    MessageBox.Show("Incorrect password. RePrint aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-                else
-                {
-                    // Cancel pressed
-                    return false;
-                }
-            }
-        }
+        //            MessageBox.Show("Incorrect password. RePrint aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //            return false;
+        //        }
+        //        else
+        //        {
+        //            // Cancel pressed
+        //            return false;
+        //        }
+        //    }
+        //}
 
 
         private void btnReprint_Click(object sender, EventArgs e)
         {
 
-            if (!ConfirmRePrint())
-                return;
+            //if (!ConfirmRePrint())
+            //    return;
 
 
             // Ensure a row is selected.
@@ -352,7 +358,7 @@ namespace RafiReceiptsApp
                         try
                         {
                             // Reprint the receipt using your existing printer functionality.
-                            var printer = new ReceiptPrinter(selectedReceipt);
+                            var printer = new ReceiptPrinter(selectedReceipt, true);
                             printer.Print();
                             MessageBox.Show("Receipt reprint initiated.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -442,6 +448,12 @@ namespace RafiReceiptsApp
         private void label5_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnDailyDrMinahil_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("Dr Minahil");
+            form.ShowDialog();
         }
     }
 }

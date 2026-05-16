@@ -82,6 +82,11 @@ namespace RafiReceiptsApp
                 btnAdminPrices.PerformClick();
                 return true;
             }
+            else if (keyData == Keys.D1)
+            {
+                btnDrMinahil.PerformClick();
+                return true;
+            }
             return base.ProcessCmdKey(ref msg, keyData);
         }
         public MainForm()
@@ -193,6 +198,13 @@ namespace RafiReceiptsApp
         {
             // Open the ReceiptEntryForm with the selected token type "OPD"
             var receiptForm = new ReceiptEntryForm("Dr Zuhaib");
+            receiptForm.ShowDialog(); // Show modally so that the user completes this form before returning.
+        }
+
+        private void btnDrMinahil_Click(object sender, EventArgs e)
+        {
+            // Open the ReceiptEntryForm with the selected token type "OPD"
+            var receiptForm = new ReceiptEntryForm("Dr Minahil");
             receiptForm.ShowDialog(); // Show modally so that the user completes this form before returning.
         }
     }
