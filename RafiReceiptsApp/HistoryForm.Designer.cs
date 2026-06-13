@@ -34,6 +34,7 @@
             labelHistory = new Label();
             labelHistoryPatient = new Label();
             grpTodaySummary = new GroupBox();
+            lblDrAyeshaSummary = new Label();
             lblDrMinahilSummary = new Label();
             lblDrZuhaibSummary = new Label();
             lblDrTehreemSummary = new Label();
@@ -48,6 +49,7 @@
             lblUsgSummary = new Label();
             lblOpdSummary = new Label();
             grpMonthSummary = new GroupBox();
+            lblDrAyeshaSummaryMonth = new Label();
             lblDrMinahilSummaryMonth = new Label();
             lblDrZuhaibSummaryMonth = new Label();
             lblDrTehreemSummaryMonth = new Label();
@@ -64,6 +66,7 @@
             btnCancel = new Button();
             btnReprint = new Button();
             gbIndividualRecords = new GroupBox();
+            btnDailyDrMinahil = new Button();
             btnDailyDrZuhaib = new Button();
             btnDailyDrTehreem = new Button();
             btnDailyOther = new Button();
@@ -74,7 +77,7 @@
             btnDailyUSG = new Button();
             btnDailyECG = new Button();
             btnDailyOPD = new Button();
-            btnDailyDrMinahil = new Button();
+            btnDailyDrAyesha = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridHistory).BeginInit();
             panelHistory.SuspendLayout();
             grpTodaySummary.SuspendLayout();
@@ -84,14 +87,13 @@
             // 
             // dataGridHistory
             // 
-            dataGridHistory.Anchor = AnchorStyles.None;
             dataGridHistory.BackgroundColor = SystemColors.Control;
             dataGridHistory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridHistory.Location = new Point(56, 1487);
-            dataGridHistory.Margin = new Padding(7, 5, 7, 5);
+            dataGridHistory.Location = new Point(23, 544);
+            dataGridHistory.Margin = new Padding(3, 2, 3, 2);
             dataGridHistory.Name = "dataGridHistory";
             dataGridHistory.RowHeadersWidth = 51;
-            dataGridHistory.Size = new Size(2557, 415);
+            dataGridHistory.Size = new Size(1053, 152);
             dataGridHistory.TabIndex = 0;
             dataGridHistory.CellDoubleClick += dataGridHistory_CellDoubleClick;
             // 
@@ -101,9 +103,9 @@
             panelHistory.Controls.Add(labelHistory);
             panelHistory.Dock = DockStyle.Top;
             panelHistory.Location = new Point(0, 0);
-            panelHistory.Margin = new Padding(7, 5, 7, 5);
+            panelHistory.Margin = new Padding(3, 2, 3, 2);
             panelHistory.Name = "panelHistory";
-            panelHistory.Size = new Size(2686, 153);
+            panelHistory.Size = new Size(1348, 56);
             panelHistory.TabIndex = 1;
             // 
             // labelHistory
@@ -112,29 +114,26 @@
             labelHistory.AutoSize = true;
             labelHistory.Font = new Font("Microsoft Sans Serif", 22.1999989F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelHistory.ForeColor = SystemColors.ButtonHighlight;
-            labelHistory.Location = new Point(1134, 19);
-            labelHistory.Margin = new Padding(7, 0, 7, 0);
+            labelHistory.Location = new Point(588, 7);
             labelHistory.Name = "labelHistory";
-            labelHistory.Size = new Size(319, 85);
+            labelHistory.Size = new Size(134, 36);
             labelHistory.TabIndex = 1;
             labelHistory.Text = "Records";
             // 
             // labelHistoryPatient
             // 
-            labelHistoryPatient.Anchor = AnchorStyles.None;
             labelHistoryPatient.AutoSize = true;
             labelHistoryPatient.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelHistoryPatient.ForeColor = Color.FromArgb(91, 42, 134);
-            labelHistoryPatient.Location = new Point(126, 194);
-            labelHistoryPatient.Margin = new Padding(7, 0, 7, 0);
+            labelHistoryPatient.Location = new Point(52, 71);
             labelHistoryPatient.Name = "labelHistoryPatient";
-            labelHistoryPatient.Size = new Size(332, 39);
+            labelHistoryPatient.Size = new Size(151, 17);
             labelHistoryPatient.TabIndex = 6;
             labelHistoryPatient.Text = "Records of Patients";
             // 
             // grpTodaySummary
             // 
-            grpTodaySummary.Anchor = AnchorStyles.None;
+            grpTodaySummary.Controls.Add(lblDrAyeshaSummary);
             grpTodaySummary.Controls.Add(lblDrMinahilSummary);
             grpTodaySummary.Controls.Add(lblDrZuhaibSummary);
             grpTodaySummary.Controls.Add(lblDrTehreemSummary);
@@ -148,76 +147,77 @@
             grpTodaySummary.Controls.Add(lblEcgSummary);
             grpTodaySummary.Controls.Add(lblUsgSummary);
             grpTodaySummary.Controls.Add(lblOpdSummary);
-            grpTodaySummary.Location = new Point(126, 261);
-            grpTodaySummary.Margin = new Padding(7, 5, 7, 5);
+            grpTodaySummary.Location = new Point(52, 95);
+            grpTodaySummary.Margin = new Padding(3, 2, 3, 2);
             grpTodaySummary.Name = "grpTodaySummary";
-            grpTodaySummary.Padding = new Padding(7, 5, 7, 5);
-            grpTodaySummary.Size = new Size(1173, 783);
+            grpTodaySummary.Padding = new Padding(3, 2, 3, 2);
+            grpTodaySummary.Size = new Size(483, 286);
             grpTodaySummary.TabIndex = 7;
             grpTodaySummary.TabStop = false;
             grpTodaySummary.Text = "Today's Summary";
             // 
+            // lblDrAyeshaSummary
+            // 
+            lblDrAyeshaSummary.AutoSize = true;
+            lblDrAyeshaSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDrAyeshaSummary.Location = new Point(36, 194);
+            lblDrAyeshaSummary.Name = "lblDrAyeshaSummary";
+            lblDrAyeshaSummary.Size = new Size(154, 17);
+            lblDrAyeshaSummary.TabIndex = 32;
+            lblDrAyeshaSummary.Text = "Dr Ayesha Summary";
+            // 
             // lblDrMinahilSummary
             // 
-            lblDrMinahilSummary.Anchor = AnchorStyles.Top;
             lblDrMinahilSummary.AutoSize = true;
             lblDrMinahilSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrMinahilSummary.Location = new Point(90, 507);
-            lblDrMinahilSummary.Margin = new Padding(7, 0, 7, 0);
+            lblDrMinahilSummary.Location = new Point(37, 176);
             lblDrMinahilSummary.Name = "lblDrMinahilSummary";
-            lblDrMinahilSummary.Size = new Size(343, 39);
+            lblDrMinahilSummary.Size = new Size(152, 17);
             lblDrMinahilSummary.TabIndex = 31;
             lblDrMinahilSummary.Text = "Dr Minahil Summary";
             // 
             // lblDrZuhaibSummary
             // 
-            lblDrZuhaibSummary.Anchor = AnchorStyles.Top;
             lblDrZuhaibSummary.AutoSize = true;
             lblDrZuhaibSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrZuhaibSummary.Location = new Point(90, 456);
-            lblDrZuhaibSummary.Margin = new Padding(7, 0, 7, 0);
+            lblDrZuhaibSummary.Location = new Point(37, 159);
             lblDrZuhaibSummary.Name = "lblDrZuhaibSummary";
-            lblDrZuhaibSummary.Size = new Size(338, 39);
+            lblDrZuhaibSummary.Size = new Size(151, 17);
             lblDrZuhaibSummary.TabIndex = 30;
             lblDrZuhaibSummary.Text = "Dr Zuhaib Summary";
             // 
             // lblDrTehreemSummary
             // 
-            lblDrTehreemSummary.Anchor = AnchorStyles.Top;
             lblDrTehreemSummary.AutoSize = true;
             lblDrTehreemSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrTehreemSummary.Location = new Point(90, 407);
-            lblDrTehreemSummary.Margin = new Padding(7, 0, 7, 0);
+            lblDrTehreemSummary.Location = new Point(37, 142);
             lblDrTehreemSummary.Name = "lblDrTehreemSummary";
-            lblDrTehreemSummary.Size = new Size(370, 39);
+            lblDrTehreemSummary.Size = new Size(165, 17);
             lblDrTehreemSummary.TabIndex = 29;
             lblDrTehreemSummary.Text = "Dr Tehreem Summary";
             // 
             // lblDrFizzaSummary
             // 
-            lblDrFizzaSummary.Anchor = AnchorStyles.Top;
             lblDrFizzaSummary.AutoSize = true;
             lblDrFizzaSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrFizzaSummary.Location = new Point(90, 251);
-            lblDrFizzaSummary.Margin = new Padding(7, 0, 7, 0);
+            lblDrFizzaSummary.Location = new Point(37, 87);
             lblDrFizzaSummary.Name = "lblDrFizzaSummary";
-            lblDrFizzaSummary.Size = new Size(314, 39);
+            lblDrFizzaSummary.Size = new Size(139, 17);
             lblDrFizzaSummary.TabIndex = 28;
             lblDrFizzaSummary.Text = "Dr Fizza Summary";
             // 
             // btnPrintDaily
             // 
-            btnPrintDaily.Anchor = AnchorStyles.Top;
             btnPrintDaily.BackColor = Color.WhiteSmoke;
             btnPrintDaily.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnPrintDaily.FlatAppearance.BorderSize = 2;
             btnPrintDaily.FlatStyle = FlatStyle.Flat;
             btnPrintDaily.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnPrintDaily.ForeColor = Color.FromArgb(91, 42, 134);
-            btnPrintDaily.Location = new Point(828, 669);
-            btnPrintDaily.Margin = new Padding(7, 5, 7, 5);
+            btnPrintDaily.Location = new Point(356, 245);
+            btnPrintDaily.Margin = new Padding(3, 2, 3, 2);
             btnPrintDaily.Name = "btnPrintDaily";
-            btnPrintDaily.Size = new Size(318, 104);
+            btnPrintDaily.Size = new Size(123, 38);
             btnPrintDaily.TabIndex = 27;
             btnPrintDaily.Text = "Print Today's";
             btnPrintDaily.UseVisualStyleBackColor = false;
@@ -225,104 +225,88 @@
             // 
             // lblOthersSummary
             // 
-            lblOthersSummary.Anchor = AnchorStyles.Top;
             lblOthersSummary.AutoSize = true;
             lblOthersSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOthersSummary.Location = new Point(90, 555);
-            lblOthersSummary.Margin = new Padding(7, 0, 7, 0);
+            lblOthersSummary.Location = new Point(37, 210);
             lblOthersSummary.Name = "lblOthersSummary";
-            lblOthersSummary.Size = new Size(240, 39);
+            lblOthersSummary.Size = new Size(110, 17);
             lblOthersSummary.TabIndex = 26;
             lblOthersSummary.Text = "Other Doctors";
             // 
             // lblDrJawadSummary
             // 
-            lblDrJawadSummary.Anchor = AnchorStyles.Top;
             lblDrJawadSummary.AutoSize = true;
             lblDrJawadSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrJawadSummary.Location = new Point(90, 353);
-            lblDrJawadSummary.Margin = new Padding(7, 0, 7, 0);
+            lblDrJawadSummary.Location = new Point(37, 123);
             lblDrJawadSummary.Name = "lblDrJawadSummary";
-            lblDrJawadSummary.Size = new Size(331, 39);
+            lblDrJawadSummary.Size = new Size(146, 17);
             lblDrJawadSummary.TabIndex = 25;
             lblDrJawadSummary.Text = "Dr Jawad Summary";
             // 
             // lblDrHammadSummary
             // 
-            lblDrHammadSummary.Anchor = AnchorStyles.Top;
             lblDrHammadSummary.AutoSize = true;
             lblDrHammadSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrHammadSummary.Location = new Point(90, 303);
-            lblDrHammadSummary.Margin = new Padding(7, 0, 7, 0);
+            lblDrHammadSummary.Location = new Point(37, 105);
             lblDrHammadSummary.Name = "lblDrHammadSummary";
-            lblDrHammadSummary.Size = new Size(371, 39);
+            lblDrHammadSummary.Size = new Size(163, 17);
             lblDrHammadSummary.TabIndex = 24;
             lblDrHammadSummary.Text = "Dr Hammad Summary";
             // 
             // lblDrZainSummary
             // 
-            lblDrZainSummary.Anchor = AnchorStyles.Top;
             lblDrZainSummary.AutoSize = true;
             lblDrZainSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrZainSummary.Location = new Point(90, 202);
-            lblDrZainSummary.Margin = new Padding(7, 0, 7, 0);
+            lblDrZainSummary.Location = new Point(37, 69);
             lblDrZainSummary.Name = "lblDrZainSummary";
-            lblDrZainSummary.Size = new Size(298, 39);
+            lblDrZainSummary.Size = new Size(133, 17);
             lblDrZainSummary.TabIndex = 23;
             lblDrZainSummary.Text = "Dr Zain Summary";
             // 
             // lblTodayTotal
             // 
-            lblTodayTotal.Anchor = AnchorStyles.Top;
             lblTodayTotal.AutoSize = true;
             lblTodayTotal.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTodayTotal.ForeColor = Color.Red;
-            lblTodayTotal.Location = new Point(90, 603);
-            lblTodayTotal.Margin = new Padding(7, 0, 7, 0);
+            lblTodayTotal.Location = new Point(37, 227);
             lblTodayTotal.Name = "lblTodayTotal";
-            lblTodayTotal.Size = new Size(242, 39);
+            lblTodayTotal.Size = new Size(110, 17);
             lblTodayTotal.TabIndex = 22;
             lblTodayTotal.Text = "Overall Today";
             // 
             // lblEcgSummary
             // 
-            lblEcgSummary.Anchor = AnchorStyles.Top;
             lblEcgSummary.AutoSize = true;
             lblEcgSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblEcgSummary.Location = new Point(90, 101);
-            lblEcgSummary.Margin = new Padding(7, 0, 7, 0);
+            lblEcgSummary.Location = new Point(37, 34);
             lblEcgSummary.Name = "lblEcgSummary";
-            lblEcgSummary.Size = new Size(256, 39);
+            lblEcgSummary.Size = new Size(111, 17);
             lblEcgSummary.TabIndex = 21;
             lblEcgSummary.Text = "ECG Summary";
             // 
             // lblUsgSummary
             // 
-            lblUsgSummary.Anchor = AnchorStyles.Top;
             lblUsgSummary.AutoSize = true;
             lblUsgSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblUsgSummary.Location = new Point(90, 153);
-            lblUsgSummary.Margin = new Padding(7, 0, 7, 0);
+            lblUsgSummary.Location = new Point(37, 51);
             lblUsgSummary.Name = "lblUsgSummary";
-            lblUsgSummary.Size = new Size(256, 39);
+            lblUsgSummary.Size = new Size(112, 17);
             lblUsgSummary.TabIndex = 20;
             lblUsgSummary.Text = "USG Summary";
             // 
             // lblOpdSummary
             // 
-            lblOpdSummary.Anchor = AnchorStyles.Top;
             lblOpdSummary.AutoSize = true;
             lblOpdSummary.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOpdSummary.Location = new Point(90, 46);
-            lblOpdSummary.Margin = new Padding(7, 0, 7, 0);
+            lblOpdSummary.Location = new Point(37, 17);
             lblOpdSummary.Name = "lblOpdSummary";
-            lblOpdSummary.Size = new Size(256, 39);
+            lblOpdSummary.Size = new Size(112, 17);
             lblOpdSummary.TabIndex = 19;
             lblOpdSummary.Text = "OPD Summary";
             // 
             // grpMonthSummary
             // 
-            grpMonthSummary.Anchor = AnchorStyles.None;
+            grpMonthSummary.Controls.Add(lblDrAyeshaSummaryMonth);
             grpMonthSummary.Controls.Add(lblDrMinahilSummaryMonth);
             grpMonthSummary.Controls.Add(lblDrZuhaibSummaryMonth);
             grpMonthSummary.Controls.Add(lblDrTehreemSummaryMonth);
@@ -336,161 +320,148 @@
             grpMonthSummary.Controls.Add(lblOpdSummaryMonth);
             grpMonthSummary.Controls.Add(btnPrintMonthly);
             grpMonthSummary.Controls.Add(lblMonthTotal);
-            grpMonthSummary.Location = new Point(1326, 261);
-            grpMonthSummary.Margin = new Padding(7, 5, 7, 5);
+            grpMonthSummary.Location = new Point(546, 95);
+            grpMonthSummary.Margin = new Padding(3, 2, 3, 2);
             grpMonthSummary.Name = "grpMonthSummary";
-            grpMonthSummary.Padding = new Padding(7, 5, 7, 5);
-            grpMonthSummary.Size = new Size(1166, 783);
+            grpMonthSummary.Padding = new Padding(3, 2, 3, 2);
+            grpMonthSummary.Size = new Size(480, 286);
             grpMonthSummary.TabIndex = 8;
             grpMonthSummary.TabStop = false;
             grpMonthSummary.Text = "Monthly Summary";
             // 
+            // lblDrAyeshaSummaryMonth
+            // 
+            lblDrAyeshaSummaryMonth.AutoSize = true;
+            lblDrAyeshaSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDrAyeshaSummaryMonth.Location = new Point(7, 192);
+            lblDrAyeshaSummaryMonth.Name = "lblDrAyeshaSummaryMonth";
+            lblDrAyeshaSummaryMonth.Size = new Size(154, 17);
+            lblDrAyeshaSummaryMonth.TabIndex = 42;
+            lblDrAyeshaSummaryMonth.Text = "Dr Ayesha Summary";
+            // 
             // lblDrMinahilSummaryMonth
             // 
-            lblDrMinahilSummaryMonth.Anchor = AnchorStyles.Top;
             lblDrMinahilSummaryMonth.AutoSize = true;
             lblDrMinahilSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrMinahilSummaryMonth.Location = new Point(17, 508);
-            lblDrMinahilSummaryMonth.Margin = new Padding(7, 0, 7, 0);
+            lblDrMinahilSummaryMonth.Location = new Point(7, 175);
             lblDrMinahilSummaryMonth.Name = "lblDrMinahilSummaryMonth";
-            lblDrMinahilSummaryMonth.Size = new Size(343, 39);
+            lblDrMinahilSummaryMonth.Size = new Size(152, 17);
             lblDrMinahilSummaryMonth.TabIndex = 41;
             lblDrMinahilSummaryMonth.Text = "Dr Minahil Summary";
             // 
             // lblDrZuhaibSummaryMonth
             // 
-            lblDrZuhaibSummaryMonth.Anchor = AnchorStyles.Top;
             lblDrZuhaibSummaryMonth.AutoSize = true;
             lblDrZuhaibSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrZuhaibSummaryMonth.Location = new Point(17, 465);
-            lblDrZuhaibSummaryMonth.Margin = new Padding(7, 0, 7, 0);
+            lblDrZuhaibSummaryMonth.Location = new Point(7, 158);
             lblDrZuhaibSummaryMonth.Name = "lblDrZuhaibSummaryMonth";
-            lblDrZuhaibSummaryMonth.Size = new Size(338, 39);
+            lblDrZuhaibSummaryMonth.Size = new Size(151, 17);
             lblDrZuhaibSummaryMonth.TabIndex = 40;
             lblDrZuhaibSummaryMonth.Text = "Dr Zuhaib Summary";
             // 
             // lblDrTehreemSummaryMonth
             // 
-            lblDrTehreemSummaryMonth.Anchor = AnchorStyles.Top;
             lblDrTehreemSummaryMonth.AutoSize = true;
             lblDrTehreemSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrTehreemSummaryMonth.Location = new Point(17, 415);
-            lblDrTehreemSummaryMonth.Margin = new Padding(7, 0, 7, 0);
+            lblDrTehreemSummaryMonth.Location = new Point(7, 141);
             lblDrTehreemSummaryMonth.Name = "lblDrTehreemSummaryMonth";
-            lblDrTehreemSummaryMonth.Size = new Size(370, 39);
+            lblDrTehreemSummaryMonth.Size = new Size(165, 17);
             lblDrTehreemSummaryMonth.TabIndex = 39;
             lblDrTehreemSummaryMonth.Text = "Dr Tehreem Summary";
             // 
             // lblDrFizzaSummaryMonth
             // 
-            lblDrFizzaSummaryMonth.Anchor = AnchorStyles.Top;
             lblDrFizzaSummaryMonth.AutoSize = true;
             lblDrFizzaSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrFizzaSummaryMonth.Location = new Point(17, 260);
-            lblDrFizzaSummaryMonth.Margin = new Padding(7, 0, 7, 0);
+            lblDrFizzaSummaryMonth.Location = new Point(7, 88);
             lblDrFizzaSummaryMonth.Name = "lblDrFizzaSummaryMonth";
-            lblDrFizzaSummaryMonth.Size = new Size(314, 39);
+            lblDrFizzaSummaryMonth.Size = new Size(139, 17);
             lblDrFizzaSummaryMonth.TabIndex = 38;
             lblDrFizzaSummaryMonth.Text = "Dr Fizza Summary";
             // 
             // lblOthersSummaryMonth
             // 
-            lblOthersSummaryMonth.Anchor = AnchorStyles.Top;
             lblOthersSummaryMonth.AutoSize = true;
             lblOthersSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOthersSummaryMonth.Location = new Point(14, 555);
-            lblOthersSummaryMonth.Margin = new Padding(7, 0, 7, 0);
+            lblOthersSummaryMonth.Location = new Point(6, 209);
             lblOthersSummaryMonth.Name = "lblOthersSummaryMonth";
-            lblOthersSummaryMonth.Size = new Size(240, 39);
+            lblOthersSummaryMonth.Size = new Size(110, 17);
             lblOthersSummaryMonth.TabIndex = 37;
             lblOthersSummaryMonth.Text = "Other Doctors";
             // 
             // lblDrJawadSummaryMonth
             // 
-            lblDrJawadSummaryMonth.Anchor = AnchorStyles.Top;
             lblDrJawadSummaryMonth.AutoSize = true;
             lblDrJawadSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrJawadSummaryMonth.Location = new Point(17, 361);
-            lblDrJawadSummaryMonth.Margin = new Padding(7, 0, 7, 0);
+            lblDrJawadSummaryMonth.Location = new Point(7, 123);
             lblDrJawadSummaryMonth.Name = "lblDrJawadSummaryMonth";
-            lblDrJawadSummaryMonth.Size = new Size(331, 39);
+            lblDrJawadSummaryMonth.Size = new Size(146, 17);
             lblDrJawadSummaryMonth.TabIndex = 36;
             lblDrJawadSummaryMonth.Text = "Dr Jawad Summary";
             lblDrJawadSummaryMonth.Click += label5_Click;
             // 
             // lblDrHammadSummaryMonth
             // 
-            lblDrHammadSummaryMonth.Anchor = AnchorStyles.Top;
             lblDrHammadSummaryMonth.AutoSize = true;
             lblDrHammadSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrHammadSummaryMonth.Location = new Point(17, 312);
-            lblDrHammadSummaryMonth.Margin = new Padding(7, 0, 7, 0);
+            lblDrHammadSummaryMonth.Location = new Point(7, 106);
             lblDrHammadSummaryMonth.Name = "lblDrHammadSummaryMonth";
-            lblDrHammadSummaryMonth.Size = new Size(371, 39);
+            lblDrHammadSummaryMonth.Size = new Size(163, 17);
             lblDrHammadSummaryMonth.TabIndex = 35;
             lblDrHammadSummaryMonth.Text = "Dr Hammad Summary";
             // 
             // lblDrZainSummaryMonth
             // 
-            lblDrZainSummaryMonth.Anchor = AnchorStyles.Top;
             lblDrZainSummaryMonth.AutoSize = true;
             lblDrZainSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDrZainSummaryMonth.Location = new Point(17, 210);
-            lblDrZainSummaryMonth.Margin = new Padding(7, 0, 7, 0);
+            lblDrZainSummaryMonth.Location = new Point(7, 70);
             lblDrZainSummaryMonth.Name = "lblDrZainSummaryMonth";
-            lblDrZainSummaryMonth.Size = new Size(298, 39);
+            lblDrZainSummaryMonth.Size = new Size(133, 17);
             lblDrZainSummaryMonth.TabIndex = 34;
             lblDrZainSummaryMonth.Text = "Dr Zain Summary";
             // 
             // lblEcgSummaryMonth
             // 
-            lblEcgSummaryMonth.Anchor = AnchorStyles.Top;
             lblEcgSummaryMonth.AutoSize = true;
             lblEcgSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblEcgSummaryMonth.Location = new Point(17, 109);
-            lblEcgSummaryMonth.Margin = new Padding(7, 0, 7, 0);
+            lblEcgSummaryMonth.Location = new Point(7, 34);
             lblEcgSummaryMonth.Name = "lblEcgSummaryMonth";
-            lblEcgSummaryMonth.Size = new Size(256, 39);
+            lblEcgSummaryMonth.Size = new Size(111, 17);
             lblEcgSummaryMonth.TabIndex = 33;
             lblEcgSummaryMonth.Text = "ECG Summary";
             // 
             // lblUsgSummaryMonth
             // 
-            lblUsgSummaryMonth.Anchor = AnchorStyles.Top;
             lblUsgSummaryMonth.AutoSize = true;
             lblUsgSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblUsgSummaryMonth.Location = new Point(17, 161);
-            lblUsgSummaryMonth.Margin = new Padding(7, 0, 7, 0);
+            lblUsgSummaryMonth.Location = new Point(7, 52);
             lblUsgSummaryMonth.Name = "lblUsgSummaryMonth";
-            lblUsgSummaryMonth.Size = new Size(256, 39);
+            lblUsgSummaryMonth.Size = new Size(112, 17);
             lblUsgSummaryMonth.TabIndex = 32;
             lblUsgSummaryMonth.Text = "USG Summary";
             // 
             // lblOpdSummaryMonth
             // 
-            lblOpdSummaryMonth.Anchor = AnchorStyles.Top;
             lblOpdSummaryMonth.AutoSize = true;
             lblOpdSummaryMonth.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOpdSummaryMonth.Location = new Point(17, 55);
-            lblOpdSummaryMonth.Margin = new Padding(7, 0, 7, 0);
+            lblOpdSummaryMonth.Location = new Point(7, 16);
             lblOpdSummaryMonth.Name = "lblOpdSummaryMonth";
-            lblOpdSummaryMonth.Size = new Size(256, 39);
+            lblOpdSummaryMonth.Size = new Size(112, 17);
             lblOpdSummaryMonth.TabIndex = 31;
             lblOpdSummaryMonth.Text = "OPD Summary";
             // 
             // btnPrintMonthly
             // 
-            btnPrintMonthly.Anchor = AnchorStyles.Top;
             btnPrintMonthly.BackColor = Color.WhiteSmoke;
             btnPrintMonthly.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnPrintMonthly.FlatAppearance.BorderSize = 2;
             btnPrintMonthly.FlatStyle = FlatStyle.Flat;
             btnPrintMonthly.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnPrintMonthly.ForeColor = Color.FromArgb(91, 42, 134);
-            btnPrintMonthly.Location = new Point(834, 669);
-            btnPrintMonthly.Margin = new Padding(7, 5, 7, 5);
+            btnPrintMonthly.Location = new Point(345, 247);
+            btnPrintMonthly.Margin = new Padding(3, 2, 3, 2);
             btnPrintMonthly.Name = "btnPrintMonthly";
-            btnPrintMonthly.Size = new Size(318, 104);
+            btnPrintMonthly.Size = new Size(131, 38);
             btnPrintMonthly.TabIndex = 24;
             btnPrintMonthly.Text = "Print Monthly";
             btnPrintMonthly.UseVisualStyleBackColor = false;
@@ -498,29 +469,26 @@
             // 
             // lblMonthTotal
             // 
-            lblMonthTotal.Anchor = AnchorStyles.Top;
             lblMonthTotal.AutoSize = true;
             lblMonthTotal.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblMonthTotal.ForeColor = Color.Red;
-            lblMonthTotal.Location = new Point(14, 603);
-            lblMonthTotal.Margin = new Padding(7, 0, 7, 0);
+            lblMonthTotal.Location = new Point(6, 226);
             lblMonthTotal.Name = "lblMonthTotal";
-            lblMonthTotal.Size = new Size(644, 39);
+            lblMonthTotal.Size = new Size(291, 17);
             lblMonthTotal.TabIndex = 23;
             lblMonthTotal.Text = "This Month’s Total Tokens and Amount";
             // 
             // btnCancel
             // 
-            btnCancel.Anchor = AnchorStyles.None;
             btnCancel.BackColor = Color.WhiteSmoke;
             btnCancel.FlatAppearance.BorderSize = 2;
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCancel.ForeColor = Color.FromArgb(91, 42, 134);
-            btnCancel.Location = new Point(2290, 1946);
-            btnCancel.Margin = new Padding(7, 5, 7, 5);
+            btnCancel.Location = new Point(943, 712);
+            btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(318, 104);
+            btnCancel.Size = new Size(131, 38);
             btnCancel.TabIndex = 11;
             btnCancel.Text = "Cancel [Esc]";
             btnCancel.UseVisualStyleBackColor = false;
@@ -528,15 +496,14 @@
             // 
             // btnReprint
             // 
-            btnReprint.Anchor = AnchorStyles.None;
             btnReprint.BackColor = Color.FromArgb(91, 42, 134);
             btnReprint.FlatStyle = FlatStyle.Flat;
             btnReprint.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnReprint.ForeColor = SystemColors.ButtonHighlight;
-            btnReprint.Location = new Point(1931, 1946);
-            btnReprint.Margin = new Padding(7, 5, 7, 5);
+            btnReprint.Location = new Point(795, 712);
+            btnReprint.Margin = new Padding(3, 2, 3, 2);
             btnReprint.Name = "btnReprint";
-            btnReprint.Size = new Size(318, 104);
+            btnReprint.Size = new Size(131, 38);
             btnReprint.TabIndex = 10;
             btnReprint.Text = "Re-Print [F4]";
             btnReprint.UseVisualStyleBackColor = false;
@@ -544,7 +511,7 @@
             // 
             // gbIndividualRecords
             // 
-            gbIndividualRecords.Anchor = AnchorStyles.None;
+            gbIndividualRecords.Controls.Add(btnDailyDrAyesha);
             gbIndividualRecords.Controls.Add(btnDailyDrMinahil);
             gbIndividualRecords.Controls.Add(btnDailyDrZuhaib);
             gbIndividualRecords.Controls.Add(btnDailyDrTehreem);
@@ -556,28 +523,44 @@
             gbIndividualRecords.Controls.Add(btnDailyUSG);
             gbIndividualRecords.Controls.Add(btnDailyECG);
             gbIndividualRecords.Controls.Add(btnDailyOPD);
-            gbIndividualRecords.Location = new Point(126, 1093);
-            gbIndividualRecords.Margin = new Padding(7, 5, 7, 5);
+            gbIndividualRecords.Location = new Point(52, 400);
+            gbIndividualRecords.Margin = new Padding(3, 2, 3, 2);
             gbIndividualRecords.Name = "gbIndividualRecords";
-            gbIndividualRecords.Padding = new Padding(7, 5, 7, 5);
-            gbIndividualRecords.Size = new Size(2365, 336);
+            gbIndividualRecords.Padding = new Padding(3, 2, 3, 2);
+            gbIndividualRecords.Size = new Size(974, 123);
             gbIndividualRecords.TabIndex = 12;
             gbIndividualRecords.TabStop = false;
             gbIndividualRecords.Text = "Individual Records";
             // 
+            // btnDailyDrMinahil
+            // 
+            btnDailyDrMinahil.BackColor = Color.WhiteSmoke;
+            btnDailyDrMinahil.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrMinahil.FlatAppearance.BorderSize = 2;
+            btnDailyDrMinahil.FlatStyle = FlatStyle.Flat;
+            btnDailyDrMinahil.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDailyDrMinahil.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrMinahil.Location = new Point(509, 68);
+            btnDailyDrMinahil.Margin = new Padding(3, 2, 3, 2);
+            btnDailyDrMinahil.Name = "btnDailyDrMinahil";
+            btnDailyDrMinahil.Size = new Size(131, 38);
+            btnDailyDrMinahil.TabIndex = 38;
+            btnDailyDrMinahil.Text = "Dr Minahil";
+            btnDailyDrMinahil.UseVisualStyleBackColor = false;
+            btnDailyDrMinahil.Click += btnDailyDrMinahil_Click;
+            // 
             // btnDailyDrZuhaib
             // 
-            btnDailyDrZuhaib.Anchor = AnchorStyles.Top;
             btnDailyDrZuhaib.BackColor = Color.WhiteSmoke;
             btnDailyDrZuhaib.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDailyDrZuhaib.FlatAppearance.BorderSize = 2;
             btnDailyDrZuhaib.FlatStyle = FlatStyle.Flat;
             btnDailyDrZuhaib.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDailyDrZuhaib.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDailyDrZuhaib.Location = new Point(848, 186);
-            btnDailyDrZuhaib.Margin = new Padding(7, 5, 7, 5);
+            btnDailyDrZuhaib.Location = new Point(349, 68);
+            btnDailyDrZuhaib.Margin = new Padding(3, 2, 3, 2);
             btnDailyDrZuhaib.Name = "btnDailyDrZuhaib";
-            btnDailyDrZuhaib.Size = new Size(318, 104);
+            btnDailyDrZuhaib.Size = new Size(131, 38);
             btnDailyDrZuhaib.TabIndex = 37;
             btnDailyDrZuhaib.Text = "Dr Zuhaib";
             btnDailyDrZuhaib.UseVisualStyleBackColor = false;
@@ -585,17 +568,16 @@
             // 
             // btnDailyDrTehreem
             // 
-            btnDailyDrTehreem.Anchor = AnchorStyles.Top;
             btnDailyDrTehreem.BackColor = Color.WhiteSmoke;
             btnDailyDrTehreem.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDailyDrTehreem.FlatAppearance.BorderSize = 2;
             btnDailyDrTehreem.FlatStyle = FlatStyle.Flat;
             btnDailyDrTehreem.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDailyDrTehreem.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDailyDrTehreem.Location = new Point(462, 186);
-            btnDailyDrTehreem.Margin = new Padding(7, 5, 7, 5);
+            btnDailyDrTehreem.Location = new Point(190, 68);
+            btnDailyDrTehreem.Margin = new Padding(3, 2, 3, 2);
             btnDailyDrTehreem.Name = "btnDailyDrTehreem";
-            btnDailyDrTehreem.Size = new Size(318, 104);
+            btnDailyDrTehreem.Size = new Size(131, 38);
             btnDailyDrTehreem.TabIndex = 36;
             btnDailyDrTehreem.Text = "Dr Tehreem";
             btnDailyDrTehreem.UseVisualStyleBackColor = false;
@@ -603,17 +585,16 @@
             // 
             // btnDailyOther
             // 
-            btnDailyOther.Anchor = AnchorStyles.Top;
             btnDailyOther.BackColor = Color.WhiteSmoke;
             btnDailyOther.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDailyOther.FlatAppearance.BorderSize = 2;
             btnDailyOther.FlatStyle = FlatStyle.Flat;
             btnDailyOther.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDailyOther.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDailyOther.Location = new Point(1617, 186);
-            btnDailyOther.Margin = new Padding(7, 5, 7, 5);
+            btnDailyOther.Location = new Point(825, 68);
+            btnDailyOther.Margin = new Padding(3, 2, 3, 2);
             btnDailyOther.Name = "btnDailyOther";
-            btnDailyOther.Size = new Size(318, 104);
+            btnDailyOther.Size = new Size(131, 38);
             btnDailyOther.TabIndex = 35;
             btnDailyOther.Text = "Others";
             btnDailyOther.UseVisualStyleBackColor = false;
@@ -621,17 +602,16 @@
             // 
             // btnDailyDrJawad
             // 
-            btnDailyDrJawad.Anchor = AnchorStyles.Top;
             btnDailyDrJawad.BackColor = Color.WhiteSmoke;
             btnDailyDrJawad.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDailyDrJawad.FlatAppearance.BorderSize = 2;
             btnDailyDrJawad.FlatStyle = FlatStyle.Flat;
             btnDailyDrJawad.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDailyDrJawad.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDailyDrJawad.Location = new Point(73, 186);
-            btnDailyDrJawad.Margin = new Padding(7, 5, 7, 5);
+            btnDailyDrJawad.Location = new Point(30, 68);
+            btnDailyDrJawad.Margin = new Padding(3, 2, 3, 2);
             btnDailyDrJawad.Name = "btnDailyDrJawad";
-            btnDailyDrJawad.Size = new Size(318, 104);
+            btnDailyDrJawad.Size = new Size(131, 38);
             btnDailyDrJawad.TabIndex = 34;
             btnDailyDrJawad.Text = "Dr Jawad";
             btnDailyDrJawad.UseVisualStyleBackColor = false;
@@ -639,17 +619,16 @@
             // 
             // btnDailyDrHammad
             // 
-            btnDailyDrHammad.Anchor = AnchorStyles.Top;
             btnDailyDrHammad.BackColor = Color.WhiteSmoke;
             btnDailyDrHammad.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDailyDrHammad.FlatAppearance.BorderSize = 2;
             btnDailyDrHammad.FlatStyle = FlatStyle.Flat;
             btnDailyDrHammad.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDailyDrHammad.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDailyDrHammad.Location = new Point(2004, 55);
-            btnDailyDrHammad.Margin = new Padding(7, 5, 7, 5);
+            btnDailyDrHammad.Location = new Point(825, 20);
+            btnDailyDrHammad.Margin = new Padding(3, 2, 3, 2);
             btnDailyDrHammad.Name = "btnDailyDrHammad";
-            btnDailyDrHammad.Size = new Size(318, 104);
+            btnDailyDrHammad.Size = new Size(131, 38);
             btnDailyDrHammad.TabIndex = 33;
             btnDailyDrHammad.Text = "Dr Hammad";
             btnDailyDrHammad.UseVisualStyleBackColor = false;
@@ -657,17 +636,16 @@
             // 
             // btnDailyDrFizza
             // 
-            btnDailyDrFizza.Anchor = AnchorStyles.Top;
             btnDailyDrFizza.BackColor = Color.WhiteSmoke;
             btnDailyDrFizza.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDailyDrFizza.FlatAppearance.BorderSize = 2;
             btnDailyDrFizza.FlatStyle = FlatStyle.Flat;
             btnDailyDrFizza.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDailyDrFizza.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDailyDrFizza.Location = new Point(1617, 55);
-            btnDailyDrFizza.Margin = new Padding(7, 5, 7, 5);
+            btnDailyDrFizza.Location = new Point(666, 20);
+            btnDailyDrFizza.Margin = new Padding(3, 2, 3, 2);
             btnDailyDrFizza.Name = "btnDailyDrFizza";
-            btnDailyDrFizza.Size = new Size(318, 104);
+            btnDailyDrFizza.Size = new Size(131, 38);
             btnDailyDrFizza.TabIndex = 32;
             btnDailyDrFizza.Text = "Dr Fizza";
             btnDailyDrFizza.UseVisualStyleBackColor = false;
@@ -675,17 +653,16 @@
             // 
             // btnDailyDrZain
             // 
-            btnDailyDrZain.Anchor = AnchorStyles.Top;
             btnDailyDrZain.BackColor = Color.WhiteSmoke;
             btnDailyDrZain.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDailyDrZain.FlatAppearance.BorderSize = 2;
             btnDailyDrZain.FlatStyle = FlatStyle.Flat;
             btnDailyDrZain.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDailyDrZain.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDailyDrZain.Location = new Point(1234, 55);
-            btnDailyDrZain.Margin = new Padding(7, 5, 7, 5);
+            btnDailyDrZain.Location = new Point(508, 20);
+            btnDailyDrZain.Margin = new Padding(3, 2, 3, 2);
             btnDailyDrZain.Name = "btnDailyDrZain";
-            btnDailyDrZain.Size = new Size(318, 104);
+            btnDailyDrZain.Size = new Size(131, 38);
             btnDailyDrZain.TabIndex = 31;
             btnDailyDrZain.Text = "Dr Zain";
             btnDailyDrZain.UseVisualStyleBackColor = false;
@@ -693,17 +670,16 @@
             // 
             // btnDailyUSG
             // 
-            btnDailyUSG.Anchor = AnchorStyles.Top;
             btnDailyUSG.BackColor = Color.WhiteSmoke;
             btnDailyUSG.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDailyUSG.FlatAppearance.BorderSize = 2;
             btnDailyUSG.FlatStyle = FlatStyle.Flat;
             btnDailyUSG.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDailyUSG.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDailyUSG.Location = new Point(848, 55);
-            btnDailyUSG.Margin = new Padding(7, 5, 7, 5);
+            btnDailyUSG.Location = new Point(349, 20);
+            btnDailyUSG.Margin = new Padding(3, 2, 3, 2);
             btnDailyUSG.Name = "btnDailyUSG";
-            btnDailyUSG.Size = new Size(318, 104);
+            btnDailyUSG.Size = new Size(131, 38);
             btnDailyUSG.TabIndex = 30;
             btnDailyUSG.Text = "USG";
             btnDailyUSG.UseVisualStyleBackColor = false;
@@ -711,17 +687,16 @@
             // 
             // btnDailyECG
             // 
-            btnDailyECG.Anchor = AnchorStyles.Top;
             btnDailyECG.BackColor = Color.WhiteSmoke;
             btnDailyECG.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDailyECG.FlatAppearance.BorderSize = 2;
             btnDailyECG.FlatStyle = FlatStyle.Flat;
             btnDailyECG.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDailyECG.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDailyECG.Location = new Point(459, 55);
-            btnDailyECG.Margin = new Padding(7, 5, 7, 5);
+            btnDailyECG.Location = new Point(189, 20);
+            btnDailyECG.Margin = new Padding(3, 2, 3, 2);
             btnDailyECG.Name = "btnDailyECG";
-            btnDailyECG.Size = new Size(318, 104);
+            btnDailyECG.Size = new Size(131, 38);
             btnDailyECG.TabIndex = 29;
             btnDailyECG.Text = "ECG";
             btnDailyECG.UseVisualStyleBackColor = false;
@@ -729,46 +704,44 @@
             // 
             // btnDailyOPD
             // 
-            btnDailyOPD.Anchor = AnchorStyles.Top;
             btnDailyOPD.BackColor = Color.WhiteSmoke;
             btnDailyOPD.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
             btnDailyOPD.FlatAppearance.BorderSize = 2;
             btnDailyOPD.FlatStyle = FlatStyle.Flat;
             btnDailyOPD.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDailyOPD.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDailyOPD.Location = new Point(73, 55);
-            btnDailyOPD.Margin = new Padding(7, 5, 7, 5);
+            btnDailyOPD.Location = new Point(30, 20);
+            btnDailyOPD.Margin = new Padding(3, 2, 3, 2);
             btnDailyOPD.Name = "btnDailyOPD";
-            btnDailyOPD.Size = new Size(318, 104);
+            btnDailyOPD.Size = new Size(131, 38);
             btnDailyOPD.TabIndex = 28;
             btnDailyOPD.Text = "OPD";
             btnDailyOPD.UseVisualStyleBackColor = false;
             btnDailyOPD.Click += btnDailyOPD_Click;
             // 
-            // btnDailyDrMinahil
+            // btnDailyDrAyesha
             // 
-            btnDailyDrMinahil.Anchor = AnchorStyles.Top;
-            btnDailyDrMinahil.BackColor = Color.WhiteSmoke;
-            btnDailyDrMinahil.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
-            btnDailyDrMinahil.FlatAppearance.BorderSize = 2;
-            btnDailyDrMinahil.FlatStyle = FlatStyle.Flat;
-            btnDailyDrMinahil.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDailyDrMinahil.ForeColor = Color.FromArgb(91, 42, 134);
-            btnDailyDrMinahil.Location = new Point(1237, 186);
-            btnDailyDrMinahil.Margin = new Padding(7, 5, 7, 5);
-            btnDailyDrMinahil.Name = "btnDailyDrMinahil";
-            btnDailyDrMinahil.Size = new Size(318, 104);
-            btnDailyDrMinahil.TabIndex = 38;
-            btnDailyDrMinahil.Text = "Dr Minahil";
-            btnDailyDrMinahil.UseVisualStyleBackColor = false;
-            btnDailyDrMinahil.Click += btnDailyDrMinahil_Click;
+            btnDailyDrAyesha.BackColor = Color.WhiteSmoke;
+            btnDailyDrAyesha.FlatAppearance.BorderColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrAyesha.FlatAppearance.BorderSize = 2;
+            btnDailyDrAyesha.FlatStyle = FlatStyle.Flat;
+            btnDailyDrAyesha.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDailyDrAyesha.ForeColor = Color.FromArgb(91, 42, 134);
+            btnDailyDrAyesha.Location = new Point(666, 68);
+            btnDailyDrAyesha.Margin = new Padding(3, 2, 3, 2);
+            btnDailyDrAyesha.Name = "btnDailyDrAyesha";
+            btnDailyDrAyesha.Size = new Size(131, 38);
+            btnDailyDrAyesha.TabIndex = 39;
+            btnDailyDrAyesha.Text = "Dr Ayesha";
+            btnDailyDrAyesha.UseVisualStyleBackColor = false;
+            btnDailyDrAyesha.Click += btnDailyDrAyesha_Click;
             // 
             // HistoryForm
             // 
-            AutoScaleDimensions = new SizeF(17F, 41F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(2686, 2080);
+            ClientSize = new Size(1348, 687);
             Controls.Add(gbIndividualRecords);
             Controls.Add(btnCancel);
             Controls.Add(btnReprint);
@@ -779,8 +752,9 @@
             Controls.Add(dataGridHistory);
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
-            Margin = new Padding(7, 5, 7, 5);
-            MinimumSize = new Size(2679, 1720);
+            Margin = new Padding(3, 2, 3, 2);
+            MaximumSize = new Size(1920, 1080);
+            MinimumSize = new Size(720, 576);
             Name = "HistoryForm";
             Text = "Records";
             Load += HistoryForm_Load;
@@ -844,5 +818,8 @@
         private Label lblDrMinahilSummary;
         private Label lblDrMinahilSummaryMonth;
         private Button btnDailyDrMinahil;
+        private Label lblDrAyeshaSummary;
+        private Label lblDrAyeshaSummaryMonth;
+        private Button btnDailyDrAyesha;
     }
 }

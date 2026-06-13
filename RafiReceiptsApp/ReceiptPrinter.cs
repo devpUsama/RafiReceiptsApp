@@ -1,4 +1,4 @@
-﻿using RafiReceiptsApp.Models; // for Receipt
+﻿using RafiReceiptsApp.Models; // Ensure this matches your actual namespace
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -38,227 +38,125 @@ public class ReceiptPrinter
     private void PrintPage(object sender, PrintPageEventArgs e)
     {
         Graphics g = e.Graphics!;
-        g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+        g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
         // Use margin bounds but apply a SAFE padding so we never draw into the printer's non-printable edge
         var area = e.MarginBounds;
-        const float safePad = 12f;                  // <- ADJUST this if clipping persists (8..20 typical)
+        const float safePad = 12f;
         float left = area.Left + safePad;
         float width = Math.Max(8f, area.Width - safePad * 2f);
-        float top = area.Top;
-        float bottom = area.Bottom;
-        float y = top;
+        float y = area.Top + safePad;
 
-        // spacing & fonts (dispose with using)
-        float sectionSpacing = 10f;
-        float interLineSpacing = 6f;
-        float boxPad = 8f;
+        // Ensure GDI+ objects are properly disposed to prevent memory leaks in production
+        using var headerFont = new Font("Arial", 16, FontStyle.Bold);
+        using var labelFont = new Font("Arial", 10, FontStyle.Regular);
+        using var valueFont = new Font("Arial", 10, FontStyle.Bold);
+        using var boxFont = new Font("Arial", 14, FontStyle.Bold);
 
-        using (var centerFmt = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
-        using (var leftTopFmt = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near })
-        using (var wrapFmt = new StringFormat(StringFormatFlags.LineLimit)
+        using var centerFmt = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+        using var wrapFmt = new StringFormat(StringFormatFlags.LineLimit)
         {
             Trimming = StringTrimming.Word,
             Alignment = StringAlignment.Near,
             LineAlignment = StringAlignment.Near
-        })
+        };
 
-        // Fonts: header reduced, patient fields bumped slightly
-        using (var headerFont = new Font("Georgia", 16, FontStyle.Bold))        // reduced size (was 18)
-        using (var headerSubFont = new Font("Segoe UI", 9, FontStyle.Regular))
-        using (var sectionTitleFont = new Font("Segoe UI", 9, FontStyle.Bold)) // "Patient Visit Receipt"
-        using (var labelFont = new Font("Segoe UI", 9, FontStyle.Regular))     // bumped +1
-        using (var valueFont = new Font("Segoe UI", 10, FontStyle.Bold))        // bumped +2
-        using (var boxFont = new Font("Consolas", 17, FontStyle.Bold))
-        using (var verseFont = new Font("Segoe UI", 9, FontStyle.Italic))
+        // --- 1) Header centered ---
+        string hdr = "RMC";
+        var hdrSize = g.MeasureString(hdr, headerFont);
+        g.DrawString(hdr, headerFont, Brushes.Black, new RectangleF(left, y, width, hdrSize.Height), centerFmt);
+        y += hdrSize.Height + 8;
+
+        // --- 2) Print ID centered under the header ---
+        string idText = $"ID: {_receipt.Id}"; // Removed ?. here
+        SizeF idSize = g.MeasureString(idText, labelFont);
+        g.DrawString(idText, labelFont, Brushes.Black, new RectangleF(left, y, width, idSize.Height), centerFmt);
+        y += idSize.Height + 5;
+
+        // --- 3) Reprint Watermark (if applicable) ---
+        if (_isReprint)
         {
-            static string S(object? o) => o?.ToString() ?? string.Empty;
-
-            // Helper to measure wrapped text
-            SizeF MeasureWrapped(Graphics g2, string text, Font f, float maxWidth, StringFormat fmt)
-                => string.IsNullOrEmpty(text) ? SizeF.Empty : g2.MeasureString(text, f, new SizeF(maxWidth, float.MaxValue), fmt);
-
-            void DrawDashedLine(float yPos)
-            {
-                using var pen = new Pen(Color.Black, 1) { DashStyle = DashStyle.Dot };
-                g.DrawLine(pen, left, yPos, left + width, yPos);
-            }
-
-            
-
-            // Header: Hospital name & address
-            string hospitalName = "Rafi Medical Complex";
-            string hospitalAddress = "Vehari Road Hasilpur Old";
-            string smallInfo = DateTime.Now.ToString("g");
-
-            // Draw hospital name (smaller so no clipping)
-            var hSize = g.MeasureString(hospitalName, headerFont);
-            g.DrawString(hospitalName, headerFont, Brushes.Black, new RectangleF(left, y, width, hSize.Height), centerFmt);
-            y += hSize.Height + 4;
-
-            // Address
-            var addrSize = g.MeasureString(hospitalAddress, headerSubFont);
-            g.DrawString(hospitalAddress, headerSubFont, Brushes.Black, new RectangleF(left, y, width, addrSize.Height), centerFmt);
-            y += addrSize.Height + 6;
-
-            // Date/time (centered)
-            var infoSize = g.MeasureString(smallInfo, headerSubFont);
-            g.DrawString(smallInfo, headerSubFont, Brushes.Black, left + (width - infoSize.Width) / 2f, y);
-            y += infoSize.Height + 6;
-
-            // New centered section title
-            string sectionTitle = "Patient Visit Receipt";
-            var stSize = g.MeasureString(sectionTitle, sectionTitleFont);
-            g.DrawString(sectionTitle, sectionTitleFont, Brushes.Black, new RectangleF(left, y, width, stSize.Height), centerFmt);
-            y += stSize.Height + sectionSpacing;
-
-            if (_isReprint)
-            {
-                using (var watermarkFont = new Font("Arial", 10, FontStyle.Bold))
-                {
-                    string reprintText = "*** REPRINT ***";
-                    var wmSize = g.MeasureString(reprintText, watermarkFont);
-                    g.DrawString(reprintText, watermarkFont, Brushes.Black, new RectangleF(left, y, width, wmSize.Height), centerFmt);
-                    y += wmSize.Height + 10; // Add some space below it
-                }
-            }
-
-            // Section separator
-            DrawDashedLine(y); y += 6;
-
-
-            // --- ADD HERE: Token section heading ---
-            string tokenSectionTitle = "Token Info:";
-            var tokenSectionSize = g.MeasureString(tokenSectionTitle, sectionTitleFont);
-            g.DrawString(tokenSectionTitle, sectionTitleFont, Brushes.Black, new RectangleF(left, y, width, tokenSectionSize.Height), leftTopFmt);
-            y += tokenSectionSize.Height + 6;
-
-            // Big token queue number box (centered)
-            string tokenTxt = S(_receipt?.QueueNumber);
-            if (!string.IsNullOrWhiteSpace(tokenTxt))
-            {
-                var ts = g.MeasureString(tokenTxt, boxFont);
-                float boxW = Math.Min(width, ts.Width + boxPad * 2f);
-                float boxH = ts.Height + boxPad * 2f;
-                float boxX = left + (width - boxW) / 2f;
-                var boxRect = new RectangleF(boxX, y, boxW, boxH);
-
-                using (var pen = new Pen(Color.Black, 1) { DashStyle = DashStyle.Dot })
-                    g.DrawRectangle(pen, boxRect.X, boxRect.Y, boxRect.Width, boxRect.Height);
-
-                // center text safely inside boxRect
-                g.DrawString(tokenTxt, boxFont, Brushes.Black, boxRect, centerFmt);
-                y += boxH + 8;
-            }
-
-            // Two-column "label : value" helper (value right-aligned)
-            void FieldRight(string label, string value)
-            {
-                if (string.IsNullOrEmpty(value)) return;
-                float leftCol = width * 0.55f;
-                float rightCol = width - leftCol;
-
-                var lSize = g.MeasureString(label + ":", labelFont);
-                var vSize = MeasureWrapped(g, value, valueFont, rightCol, wrapFmt);
-
-                float rowHeight = Math.Max(lSize.Height, vSize.Height);
-
-                // If row overflows bottom, truncate value to fit remaining space
-                if (y + rowHeight > bottom - 20)
-                {
-                    float remaining = Math.Max(0, bottom - 20 - y);
-                    // truncate with simple substring fallback
-                    while (vSize.Height > remaining && value.Length > 0)
-                    {
-                        value = value.Substring(0, Math.Max(0, value.Length - 4)).TrimEnd() + "...";
-                        vSize = MeasureWrapped(g, value, valueFont, rightCol, wrapFmt);
-                    }
-                    rowHeight = Math.Max(lSize.Height, vSize.Height);
-                }
-
-                // draw label & value (value right-aligned within its column)
-                g.DrawString(label + ":", labelFont, Brushes.Black, new RectangleF(left, y, leftCol, rowHeight), leftTopFmt);
-                var measuredVal = g.MeasureString(value, valueFont, new SizeF(rightCol, rowHeight), wrapFmt);
-                float valX = left + leftCol + (rightCol - measuredVal.Width);
-                g.DrawString(value, valueFont, Brushes.Black, new RectangleF(valX, y, measuredVal.Width, measuredVal.Height), leftTopFmt);
-
-                y += rowHeight + interLineSpacing;
-            }
-
-            // Token fields
-            FieldRight("Visit For", S(_receipt?.TokenType));
-
-            // NEW: If USG token, print its subcategory (USGType) in the token section as requested
-            if (string.Equals(S(_receipt?.TokenType), "USG", StringComparison.OrdinalIgnoreCase) &&
-                !string.IsNullOrWhiteSpace(S(_receipt?.USGType)))
-            {
-                FieldRight("USG Type", S(_receipt?.USGType));
-            }
-
-            FieldRight("Token ID", S(_receipt?.Id));
-            FieldRight("Fee", _receipt != null ? _receipt.Fee.ToString("F2") : "0.00");
-
-            DrawDashedLine(y); y += sectionSpacing;
-
-            // --- ADD HERE: Patient section heading ---
-            string patientSectionTitle = "Patient Info:";
-            var patientSectionSize = g.MeasureString(patientSectionTitle, sectionTitleFont);
-            g.DrawString(patientSectionTitle, sectionTitleFont, Brushes.Black, new RectangleF(left, y, width, patientSectionSize.Height), leftTopFmt);
-            y += patientSectionSize.Height + 6;
-
-            // Patient section (label left, wrapped value right)
-            void FieldWrapped(string label, string value)
-            {
-                if (string.IsNullOrEmpty(value)) return;
-                float labelCol = width * 0.30f;
-                float valueCol = width - labelCol;
-
-                var lSize = g.MeasureString(label + ":", labelFont);
-                var vSize = MeasureWrapped(g, value, valueFont, valueCol, wrapFmt);
-                float rowHeight = Math.Max(lSize.Height, vSize.Height);
-
-                if (y + rowHeight > bottom - 20)
-                {
-                    float remaining = Math.Max(0, bottom - 20 - y);
-                    while (vSize.Height > remaining && value.Length > 0)
-                    {
-                        value = value.Substring(0, Math.Max(0, value.Length - 4)).TrimEnd() + "...";
-                        vSize = MeasureWrapped(g, value, valueFont, valueCol, wrapFmt);
-                    }
-                    rowHeight = Math.Max(lSize.Height, vSize.Height);
-                }
-
-                g.DrawString(label + ":", labelFont, Brushes.Black, new RectangleF(left, y, labelCol, rowHeight), leftTopFmt);
-                g.DrawString(value, valueFont, Brushes.Black, new RectangleF(left + labelCol, y, valueCol, rowHeight), wrapFmt);
-
-                y += rowHeight + interLineSpacing;
-            }
-
-            // Patient fields (value font is slightly larger now)
-            FieldWrapped("Patient Name", S(_receipt?.PatientName));
-            FieldWrapped("Address", S(_receipt?.Address));
-            FieldWrapped("Temperature", S(_receipt?.Temperature));
-            FieldWrapped("BP", S(_receipt?.BloodPressure));
-
-            DrawDashedLine(y); y += sectionSpacing;
-
-            // Footer: verse (centered)
-            string verse = "\"And when I am ill, it is He who cures me.\"";
-            var verseSize = MeasureWrapped(g, verse, verseFont, width, wrapFmt);
-            if (y + verseSize.Height > bottom - 10)
-            {
-                // truncate to fit
-                while (verseSize.Height > Math.Max(0, bottom - 10 - y) && verse.Length > 0)
-                {
-                    verse = verse.Substring(0, Math.Max(0, verse.Length - 6)).TrimEnd() + "...";
-                    verseSize = MeasureWrapped(g, verse, verseFont, width, wrapFmt);
-                }
-            }
-            g.DrawString(verse, verseFont, Brushes.Black, new RectangleF(left, y, width, verseSize.Height), centerFmt);
-            y += verseSize.Height + 6;
-
-            DrawDashedLine(y);
-            e.HasMorePages = false;
+            using var watermarkFont = new Font("Arial", 10, FontStyle.Bold);
+            string reprintText = "*** REPRINT ***";
+            var wmSize = g.MeasureString(reprintText, watermarkFont);
+            g.DrawString(reprintText, watermarkFont, Brushes.Black, new RectangleF(left, y, width, wmSize.Height), centerFmt);
+            y += wmSize.Height + 5;
         }
+
+        // --- 4) Line Separator ---
+        g.DrawLine(Pens.Black, left, y, left + width, y);
+        y += 10;
+
+        // --- Helper to draw wrapped label/value safely ---
+        void Field(string label, string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return;
+
+            var labSize = g.MeasureString(label + ":", labelFont);
+            g.DrawString(label + ":", labelFont, Brushes.Black, left, y);
+
+            float valLeft = left + labSize.Width + 5;
+            float valWidth = width - labSize.Width - 5;
+
+            // Calculate height needed for the wrapped value
+            var used = g.MeasureString(value, valueFont, new SizeF(valWidth, float.MaxValue), wrapFmt);
+
+            var valRect = new RectangleF(valLeft, y, valWidth, used.Height);
+            g.DrawString(value, valueFont, Brushes.Black, valRect, wrapFmt);
+
+            y += Math.Max(labSize.Height, used.Height) + 6;
+        }
+
+        // --- Helper to draw boxed values (Tokens/Queue numbers) ---
+        void DrawBox(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return;
+
+            var ts = g.MeasureString(text, boxFont);
+            float pad = 6;
+
+            // Math.Min ensures the box never exceeds the paper width
+            float boxW = Math.Min(width, ts.Width + pad * 2);
+            float boxH = ts.Height + pad * 2;
+            float boxX = left + (width - boxW) / 2;
+            var boxR = new RectangleF(boxX, y, boxW, boxH);
+
+            g.DrawRectangle(Pens.Black, boxR.X, boxR.Y, boxR.Width, boxR.Height);
+            g.DrawString(text, boxFont, Brushes.Black, boxR, centerFmt);
+            y += boxH + 8;
+        }
+
+        // --- 5) Receipt Type in box ---
+        DrawBox(_receipt.TokenType);
+
+        // --- 6) USG type if present ---
+        if (string.Equals(_receipt.TokenType, "USG", StringComparison.OrdinalIgnoreCase) &&
+            !string.IsNullOrWhiteSpace(_receipt.USGType))
+        {
+            Field("USG Type", _receipt.USGType);
+        }
+
+        // --- 7) Other fields ---
+        Field("Patient Name", _receipt.PatientName);
+        Field("Address", _receipt.Address);
+        Field("Temperature", _receipt.Temperature);
+        Field("BP", _receipt.BloodPressure);
+
+        Field("Fee", _receipt.Fee.ToString("F2")); // Removed ?. here
+
+        // --- 8) Queue Number in box ---
+        DrawBox(_receipt.QueueNumber.ToString()); // Removed ?. here
+
+        // --- 9) Date/Time ---
+        // Fallback to current time if CreatedAt is somehow default
+        string dateStr = _receipt.CreatedAt != default ? _receipt.CreatedAt.ToString("g") : DateTime.Now.ToString("g"); // Removed ?. here
+        Field("Date", dateStr);
+
+        // --- 10) Final horizontal line ---
+        y += 5; // Extra padding before the line
+        g.DrawLine(Pens.Black, left, y, left + width, y);
+        y += 5;
+
+        e.HasMorePages = false;
     }
 }

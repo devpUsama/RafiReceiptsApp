@@ -64,12 +64,13 @@ namespace RafiReceiptsApp.Models
                 new PriceSetting { Id = 7, Category = "OPD", SubType = "", Price = 400.00m },
                 new PriceSetting { Id = 8, Category = "ECG", SubType = "", Price = 200.00m },
                 new PriceSetting { Id = 9, Category = "Dr", SubType = "Dr Zain", Price = 500.00m },
-                new PriceSetting { Id = 10, Category = "Dr", SubType = "Dr Hammad", Price = 700.00m },
-                new PriceSetting { Id = 11, Category = "Dr", SubType = "Dr Jawad", Price = 700.00m },
+                new PriceSetting { Id = 10, Category = "Dr", SubType = "Dr Hammad", Price = 800.00m },
+                new PriceSetting { Id = 11, Category = "Dr", SubType = "Dr Jawad", Price = 800.00m },
                 new PriceSetting { Id = 12, Category = "Dr", SubType = "Dr Fizza", Price = 700.00m },
                 new PriceSetting { Id = 13, Category = "Dr", SubType = "Dr Tehreem", Price = 500.00m },
                 new PriceSetting { Id = 14, Category = "Dr", SubType = "Dr Zuhaib", Price = 500.00m },
-                new PriceSetting { Id = 15, Category = "Dr", SubType = "Dr Minahil", Price = 1000.00m }
+                new PriceSetting { Id = 15, Category = "Dr", SubType = "Dr Minahil", Price = 1000.00m },
+                new PriceSetting { Id = 16, Category = "Dr", SubType = "Dr Ayesha", Price = 500.00m }
             );
 
             base.OnModelCreating(modelBuilder);

@@ -18,15 +18,15 @@ namespace RafiReceiptsApp
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
 
-            // Check for F2 to submit
-            if (keyData == Keys.F4)
-            {
-                // Perform the click for the save/generate button.
-                btnReprint.PerformClick();
-                return true;
-            }
+            //// Check for F2 to submit
+            //if (keyData == Keys.F4)
+            //{
+            //    // Perform the click for the save/generate button.
+            //    btnReprint.PerformClick();
+            //    return true;
+            //}
             // Check for F3 to cancel
-            else if (keyData == Keys.Escape)
+            if (keyData == Keys.Escape)
             {
                 btnCancel.PerformClick();
                 return true;
@@ -50,6 +50,8 @@ namespace RafiReceiptsApp
 
         private void HistoryForm_Load(object sender, EventArgs e)
         {
+
+            btnReprint.Visible = false;
 
             LoadHistoryData();   // The method that loads receipt records into the grid.
             LoadSummaryData();   // The new method to calculate and display filters/summaries.
@@ -99,26 +101,26 @@ namespace RafiReceiptsApp
         {
 
 
-            // Ensure that the double-click happened on a valid row (e.RowIndex will be -1 for header rows).
-            if (e.RowIndex >= 0)
-            {
-                // Retrieve the current list of receipts that the grid is bound to.
-                var receipts = dataGridHistory.DataSource as List<Receipt>;
-                if (receipts != null)
-                {
-                    // Get the receipt corresponding to the row double-clicked.
-                    Receipt selectedReceipt = receipts[e.RowIndex];
+            //// Ensure that the double-click happened on a valid row (e.RowIndex will be -1 for header rows).
+            //if (e.RowIndex >= 0)
+            //{
+            //    // Retrieve the current list of receipts that the grid is bound to.
+            //    var receipts = dataGridHistory.DataSource as List<Receipt>;
+            //    if (receipts != null)
+            //    {
+            //        // Get the receipt corresponding to the row double-clicked.
+            //        Receipt selectedReceipt = receipts[e.RowIndex];
 
-                    // Open the EditReceiptForm, passing the selected receipt.
-                    EditReceiptForm editForm = new EditReceiptForm(selectedReceipt);
-                    // Show the edit form modally, so that the user must complete the edit before returning.
-                    if (editForm.ShowDialog() == DialogResult.OK)
-                    {
-                        // Refresh the history data to update any changes.
-                        LoadHistoryData();
-                    }
-                }
-            }
+            //        // Open the EditReceiptForm, passing the selected receipt.
+            //        EditReceiptForm editForm = new EditReceiptForm(selectedReceipt);
+            //        // Show the edit form modally, so that the user must complete the edit before returning.
+            //        if (editForm.ShowDialog() == DialogResult.OK)
+            //        {
+            //            // Refresh the history data to update any changes.
+            //            LoadHistoryData();
+            //        }
+            //    }
+            //}
         }
 
         private void LoadSummaryData()
@@ -159,6 +161,7 @@ namespace RafiReceiptsApp
                 var drTehreem = ByType(todaysReceipts, "Dr Tehreem");
                 var drZuhaib = ByType(todaysReceipts, "Dr Zuhaib");
                 var drMinahil = ByType(todaysReceipts, "Dr Minahil");
+                var drAyesha = ByType(todaysReceipts, "Dr Ayesha");
                 var others = ByType(todaysReceipts, "Others");
 
                 int totalCountToday = todaysReceipts.Count();
@@ -174,7 +177,8 @@ namespace RafiReceiptsApp
                 lblDrFizzaSummary.Text = $"Dr Fizza: {drFizza.count} tokens, Total: {drFizza.total:C}";
                 lblDrTehreemSummary.Text = $"Dr Tehreem: {drTehreem.count} tokens, Total: {drTehreem.total:C}";
                 lblDrZuhaibSummary.Text = $"Dr Zuhaib: {drZuhaib.count} tokens, Total: {drZuhaib.total:C}";
-                lblDrMinahilSummary.Text = $"Dr Zuhaib: {drMinahil.count} tokens, Total: {drMinahil.total:C}";
+                lblDrMinahilSummary.Text = $"Dr Minahil: {drMinahil.count} tokens, Total: {drMinahil.total:C}";
+                lblDrAyeshaSummary.Text = $"Dr Ayesha: {drAyesha.count} tokens, Total: {drAyesha.total:C}";
                 lblOthersSummary.Text = $"Others: {others.count} tokens, Total: {others.total:C}";
 
                 lblTodayTotal.Text = $"Today's Total: {totalCountToday} tokens, Amount: {totalAmountToday:C}";
@@ -190,6 +194,7 @@ namespace RafiReceiptsApp
                 var m_drTehreem = ByType(monthReceipts, "Dr Tehreem");
                 var m_drZuhaib = ByType(monthReceipts, "Dr Zuhaib");
                 var m_drMinahil = ByType(monthReceipts, "Dr Minahil");
+                var m_drAyesha = ByType(monthReceipts, "Dr Ayesha");
                 var m_others = ByType(monthReceipts, "Others");
 
                 int totalCountMonth = monthReceipts.Count();
@@ -206,7 +211,8 @@ namespace RafiReceiptsApp
                 lblDrFizzaSummaryMonth.Text = $"Dr Fizza: {m_drFizza.count} tokens, Total: {m_drFizza.total:C}";
                 lblDrTehreemSummaryMonth.Text = $"Dr Tehreem: {m_drTehreem.count} tokens, Total: {m_drTehreem.total:C}";
                 lblDrZuhaibSummaryMonth.Text = $"Dr Zuhaib: {m_drZuhaib.count} tokens, Total: {m_drZuhaib.total:C}";
-                lblDrMinahilSummaryMonth.Text = $"Dr Zuhaib: {m_drMinahil.count} tokens, Total: {m_drMinahil.total:C}";
+                lblDrMinahilSummaryMonth.Text = $"Dr Minahil: {m_drMinahil.count} tokens, Total: {m_drMinahil.total:C}";
+                lblDrAyeshaSummaryMonth.Text = $"Dr Ayesha: {m_drAyesha.count} tokens, Total: {m_drAyesha.total:C}";
                 lblOthersSummaryMonth.Text = $"Others: {m_others.count} tokens, Total: {m_others.total:C}";
 
                 lblMonthTotal.Text = $"This Month: {totalCountMonth} tokens, Amount: {totalAmountMonth:C}";
@@ -228,6 +234,7 @@ namespace RafiReceiptsApp
                              $"Dr Tehreem: {lblDrTehreemSummary.Text}\n" +
                              $"Dr Zuhaib: {lblDrZuhaibSummary.Text}\n" +
                              $"Dr Minahil: {lblDrMinahilSummary.Text}\n" +
+                             $"Dr Ayesha: {lblDrAyeshaSummary.Text}\n" +
                              $"Others: {lblOthersSummary.Text}\n" +
                              $"{lblTodayTotal.Text}";
             return summary;
@@ -247,6 +254,7 @@ namespace RafiReceiptsApp
                              $"Dr Tehreem: {lblDrTehreemSummaryMonth.Text}\n" +
                              $"Dr Zuhaib: {lblDrZuhaibSummaryMonth.Text}\n" +
                              $"Dr Minahil: {lblDrMinahilSummaryMonth.Text}\n" +
+                             $"Dr Ayesha: {lblDrAyeshaSummaryMonth.Text}\n" +
                              $"Others: {lblOthersSummaryMonth.Text}\n" +
                              $"{lblMonthTotal.Text}";
             return summary;
@@ -453,6 +461,12 @@ namespace RafiReceiptsApp
         private void btnDailyDrMinahil_Click(object sender, EventArgs e)
         {
             using var form = new DailyTypeRecordsForm("Dr Minahil");
+            form.ShowDialog();
+        }
+
+        private void btnDailyDrAyesha_Click(object sender, EventArgs e)
+        {
+            using var form = new DailyTypeRecordsForm("Dr Ayesha");
             form.ShowDialog();
         }
     }

@@ -82,7 +82,7 @@ namespace RafiReceiptsApp
                     string password = inputBox.Text ?? string.Empty;
 
                     // compare securely (still avoiding plaintext storage in production)
-                    if (string.Equals(password, "rmc786!", StringComparison.Ordinal))
+                    if (string.Equals(password, "321321", StringComparison.Ordinal))
                         return true;
 
                     MessageBox.Show("Incorrect password. Update aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

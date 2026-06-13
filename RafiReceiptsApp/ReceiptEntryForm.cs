@@ -122,7 +122,7 @@ namespace RafiReceiptsApp
                 txtDoctorName.Visible = false;
                 lblDoctorName.Visible = false;
             }
-            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hammad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza" || _tokenType == "Dr Tehreem" || _tokenType == "Dr Zuhaib" || _tokenType == "Dr Minahil")
+            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hammad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza" || _tokenType == "Dr Tehreem" || _tokenType == "Dr Zuhaib" || _tokenType == "Dr Minahil" || _tokenType == "Dr Ayesha")
             {
                 // For these, show a non-editable field populated with the corresponding doctor's name.
                 txtDoctorName.Visible = true;
@@ -160,7 +160,7 @@ namespace RafiReceiptsApp
                     }
                 }
             }
-            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hammad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza" || _tokenType == "Dr Tehreem" || _tokenType == "Dr Zuhaib" || _tokenType == "Dr Minahil")
+            else if (_tokenType == "Dr Zain" || _tokenType == "Dr Hammad" || _tokenType == "Dr Jawad" || _tokenType == "Dr Fizza" || _tokenType == "Dr Tehreem" || _tokenType == "Dr Zuhaib" || _tokenType == "Dr Minahil" || _tokenType == "Dr Ayesha")
             {
                 // For these, load the doctor's price
                 using (var context = new ApplicationDbContext())
