@@ -82,27 +82,31 @@ namespace RafiReceiptsApp
             // If needed, conditionally enable/disable the DoctorName field.
             // Set up the DoctorName field based on the token type.
             // If the token is one that requires user input (like "OPD", "USG", or "ECG"):
-            if (_tokenType == "USG")
+            if (_tokenType == "USG" || _tokenType == "CTScan")
             {
                 cmbUSGType.Visible = true;
                 lblUSGType.Visible = true;
+                lblUSGType.Text = _tokenType == "USG" ? "USG Type" : "CT Type";
                 cmbUSGType.Items.Clear();
 
-                // Load USG types from the database
                 using (var context = new ApplicationDbContext())
                 {
-                    var usgTypes = context.PriceSettings
-                                          .Where(p => p.Category == "USG")
+                    var scanTypes = context.PriceSettings
+                                          .Where(p => p.Category == _tokenType)
                                           .OrderBy(p => p.Id)
                                           .ToList();
 
-                    foreach (var type in usgTypes)
+                    foreach (var type in scanTypes)
                     {
                         cmbUSGType.Items.Add(type.SubType);
                     }
                 }
-                cmbUSGType.SelectedIndex = 0;
-                UpdateUSGPrice();  // a helper method to update the fee
+
+                if (cmbUSGType.Items.Count > 0)
+                {
+                    cmbUSGType.SelectedIndex = 0;
+                }
+                UpdateUSGPrice();
             }
 
 
@@ -116,7 +120,7 @@ namespace RafiReceiptsApp
                 txtBP.Visible = false;
                 lblBP.Visible = false;
             }
-            else if (_tokenType == "OPD" || _tokenType == "USG")
+            else if (_tokenType == "OPD" || _tokenType == "USG" || _tokenType == "CTScan")
             {
                 // Hide doctor name field for OPD and USG as well (as specified)
                 txtDoctorName.Visible = false;
@@ -201,19 +205,14 @@ namespace RafiReceiptsApp
                     CreatedAt = DateTime.Now
                 };
 
-                // If USG, optionally assign the selected USG type to a new property
-                if (_tokenType == "USG")
+                // Assign the selected type to the database column
+                if (_tokenType == "USG" || _tokenType == "CTScan")
                 {
-                    // 1a) Ensure something is selected
                     if (cmbUSGType.SelectedItem is not string selectedType)
                     {
-                        MessageBox.Show(
-                            "Please select a valid USG type.",
-                            "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show($"Please select a valid {_tokenType} type.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-
-                    // 1b) Now we know selectedType is non-null
                     receipt.USGType = selectedType;
                 }
 
@@ -228,10 +227,16 @@ namespace RafiReceiptsApp
 
 
                 // Trigger printing
+                // Trigger printing
                 var printer = new ReceiptPrinter(savedReceipt);
                 try
                 {
-                    printer.Print();
+                    printer.Print(); // Print original
+
+                    if (_tokenType == "CTScan")
+                    {
+                        printer.Print(); // Print duplicate copy for CT Scan
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -285,8 +290,7 @@ namespace RafiReceiptsApp
                 }
                 using (var context = new ApplicationDbContext())
                 {
-                    var setting = context.PriceSettings
-                                         .FirstOrDefault(p => p.Category == "USG" && p.SubType == selectedType);
+                    var setting = context.PriceSettings.FirstOrDefault(p => p.Category == _tokenType && p.SubType == selectedType);
                     if (setting != null)
                     {
                         txtFee.Text = setting.Price.ToString("F2");

@@ -1,5 +1,6 @@
 using RafiReceiptsApp.Models;
 using RafiReceiptsApp.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace RafiReceiptsApp
 {
@@ -102,8 +103,39 @@ namespace RafiReceiptsApp
             {
                 using (var context = new ApplicationDbContext())
                 {
-                    context.Database.EnsureCreated(); // Creates DB if not exists
+                    // Ensures the database and tables exist
+                    context.Database.EnsureCreated();
+
+                    // 1. Calculate the exact start of the current month
+                    // Example: If today is Oct 1, 2026, 2:56 PM, this creates a timestamp of Oct 1, 2026, 00:00:00 (Midnight)
+                    DateTime startOfCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+
+                    // 2. Safely and instantly delete only records older than the exact start of this month
+                    // Any record created on or after Oct 1, 00:00:00 is perfectly safe.
+                    context.Receipts
+                           .Where(r => r.CreatedAt < startOfCurrentMonth)
+                           .ExecuteDelete();
                     System.Diagnostics.Debug.WriteLine("[DEBUG] Database created successfully.");
+
+                    // 3. Inject CT Scan Pricing (runs once)
+                    bool ctScanExists = context.PriceSettings.Any(p => p.Category == "CTScan");
+                    if (!ctScanExists)
+                    {
+                        var ctTypes = new List<PriceSetting>
+                        {
+                            new PriceSetting { Category = "CTScan", SubType = "Head CT: CT Brain plain or Contrast", Price = 5000.00m },
+                            new PriceSetting { Category = "CTScan", SubType = "Chest / Lung CT", Price = 5000.00m },
+                            new PriceSetting { Category = "CTScan", SubType = "Abdomen / Pelvis CT", Price = 5000.00m },
+                            new PriceSetting { Category = "CTScan", SubType = "Spine CT", Price = 5000.00m },
+                            new PriceSetting { Category = "CTScan", SubType = "Bone / Musculoskeletal CT", Price = 5000.00m },
+                            new PriceSetting { Category = "CTScan", SubType = "Neck CT", Price = 5000.00m },
+                            new PriceSetting { Category = "CTScan", SubType = "CT Angiography (CTA)", Price = 5000.00m },
+                            new PriceSetting { Category = "CTScan", SubType = "Cardiac CT / Calcium Scoring", Price = 5000.00m },
+                            new PriceSetting { Category = "CTScan", SubType = "Contrast-Ct", Price = 5000.00m }
+                        };
+                        context.PriceSettings.AddRange(ctTypes);
+                        context.SaveChanges();
+                    }
                 }
             }
             catch (Exception ex)
@@ -223,6 +255,12 @@ namespace RafiReceiptsApp
             // Open the ReceiptEntryForm with the selected token type "OPD"
             var receiptForm = new ReceiptEntryForm("Dr Ayesha");
             receiptForm.ShowDialog(); // Show modally so that the user completes this form before returning.
+        }
+
+        private void btnCTScan_Click(object sender, EventArgs e)
+        {
+            ReceiptEntryForm form = new ReceiptEntryForm("CTScan");
+            form.ShowDialog();
         }
     }
 }

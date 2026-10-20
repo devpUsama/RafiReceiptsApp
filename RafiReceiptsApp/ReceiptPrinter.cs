@@ -129,11 +129,13 @@ public class ReceiptPrinter
         // --- 5) Receipt Type in box ---
         DrawBox(_receipt.TokenType);
 
-        // --- 6) USG type if present ---
-        if (string.Equals(_receipt.TokenType, "USG", StringComparison.OrdinalIgnoreCase) &&
+        // --- 6) USG or CTScan type if present ---
+        if ((string.Equals(_receipt.TokenType, "USG", StringComparison.OrdinalIgnoreCase) ||
+             string.Equals(_receipt.TokenType, "CTScan", StringComparison.OrdinalIgnoreCase)) &&
             !string.IsNullOrWhiteSpace(_receipt.USGType))
         {
-            Field("USG Type", _receipt.USGType);
+            string labelText = string.Equals(_receipt.TokenType, "CTScan", StringComparison.OrdinalIgnoreCase) ? "CT Type" : "USG Type";
+            Field(labelText, _receipt.USGType);
         }
 
         // --- 7) Other fields ---
